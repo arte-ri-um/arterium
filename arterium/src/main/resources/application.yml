@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
