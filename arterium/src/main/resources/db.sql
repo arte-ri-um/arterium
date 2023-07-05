@@ -1,4 +1,4 @@
-// DDL
+-- DDL
 
 create database arterium;
 use arterium;
