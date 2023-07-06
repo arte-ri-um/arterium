@@ -28,7 +28,6 @@ public class AddUserRequestDTO {
         return UserEntity.createUser()
             .email(dto.getEmail())
             .password(dto.getPassword())
-            .name(dto.getName())
             .nickname(dto.getNickname())
             .email(dto.getEmail())
             .phone(dto.getPhone())
