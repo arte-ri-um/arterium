@@ -1,6 +1,7 @@
 package kr.co.arterium.domain.user.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
+@ToString
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -21,9 +23,6 @@ public class UserEntity implements UserDetails {
 
     @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false, length = 20)
-    private String name;
 
     @Column(nullable = false, length = 10)
     private String nickname;
@@ -36,16 +35,17 @@ public class UserEntity implements UserDetails {
 
     private LocalDateTime birthdate;
 
-    @Column(length = 1, columnDefinition = "varchar(1) default 'N'")
+    @Column(length = 1)
+    @ColumnDefault("N")
     private String gender;
 
-    @Column(columnDefinition = "TEXT", name="profile_url")
+    @Column(columnDefinition = "TEXT", name = "profile_url")
     private String profileUrl;
 
-    @Column(columnDefinition = "int default 1", name="user_level")
+    @Column(name = "user_level")
     private int userLevel;
 
-    @Column(columnDefinition = "int default 30", name="role")
+    @Column(name = "role_id")
     private int roleId;
 
     @CreationTimestamp
@@ -60,10 +60,9 @@ public class UserEntity implements UserDetails {
 
     // == 생성 메서드 == /
     @Builder(builderMethodName = "createUser")
-    public UserEntity(Long id, String password, String name, String nickname, String email, String phone, LocalDateTime birthdate, String gender, String profileUrl, int userLevel, int roleId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public UserEntity(Long id, String password, String nickname, String email, String phone, LocalDateTime birthdate, String gender, String profileUrl, int userLevel, int roleId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.password = password;
-        this.name = name;
         this.nickname = nickname;
         this.email = email;
         this.phone = phone;
@@ -76,8 +75,15 @@ public class UserEntity implements UserDetails {
         this.updatedAt = updatedAt;
     }
 
+    @PrePersist
+    public void prePersist() {
+        this.gender = (this.gender == null) ? "N" : this.gender;
+        this.userLevel = ( this.userLevel == 0 ) ? 1 : this.userLevel;
+        this.roleId = (this.roleId == 0) ? 30 : this.roleId;
+    }
+
     // == 메서드
-    public void encryptPassword(String password){
+    public void encryptPassword(String password) {
         this.password = password;
     }
 

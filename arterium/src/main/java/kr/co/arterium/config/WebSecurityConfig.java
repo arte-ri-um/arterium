@@ -43,7 +43,7 @@ public class WebSecurityConfig {
             )
             .formLogin(login ->
                 login
-                    .loginPage("/login")
+                    //.loginPage("/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/")
