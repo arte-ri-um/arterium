@@ -15,7 +15,8 @@ spring:
 
   datasource:
     hikari:
-      jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
+#      jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
+      url: jdbc:h2:~/testDB;MODE=MYSQL  #local test DB 저장
     username: sa
     password:
     driver-class-name: org.h2.Driver
