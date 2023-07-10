@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>전시장 정보 입력</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+<h2>전시장 정보 입력</h2>
+<form id="exhibitionForm" action="/create-exhibition" method="POST">
+  <div>
+    <label for="name">전시장 이름:</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  <div>
+    <label for="location">전시장 주소:</label>
+    <input type="text" id="location" name="location" required>
+  </div>
+  <div>
+    <label for="holiday_info">휴관일 정보:</label>
+    <input type="text" id="holiday_info" name="holidayInfo" required>
+  </div>
+  <div>
+    <label for="discount_info">할인 정보:</label>
+    <input type="text" id="discount_info" name="discountInfo" required>
+  </div>
+  <div>
+    <label for="notice">유의사항:</label>
+    <textarea id="notice" name="notice" required></textarea>
+  </div>
+  <div>
+    <label for="site_url">전시장 사이트 주소:</label>
+    <input type="url" id="site_url" name="siteUrl" required>
+  </div>
+  <button type="submit">전시장 정보 저장</button>
+</form>
+
+<!-- 전시회 리스트 -->
+<div>
+  <h3>전시회 리스트</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>전시장 이름</th>
+      <th>전시장 주소</th>
+      <th>휴관일 정보</th>
+      <th>할인 정보</th>
+      <th>유의사항</th>
+      <th>전시장 사이트 주소</th>
+    </tr>
+    </thead>
+    <tbody id="exhibitionList">
+    <tr th:each="exhibition : ${exhibitions}">
+      <td th:text="${exhibition.name}"></td>
+      <td th:text="${exhibition.location}"></td>
+      <td th:text="${exhibition.holidayInfo}"></td>
+      <td th:text="${exhibition.discountInfo}"></td>
+      <td th:text="${exhibition.notice}"></td>
+      <td th:text="${exhibition.siteUrl}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<a href="/admin-page">홈으로</a>
+<script>
+  const form = document.getElementById('exhibitionForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // 기본 동작인 폼 제출을 막습니다.
+
+    // 폼의 입력 값을 가져와서 객체로 변환합니다.
+    const formData = new FormData(form);
+    const exhibitionData = {};
+    formData.forEach((value, key) => {
+      exhibitionData[key] = value;
+    });
+    //console.log(exhibitionData); //데이터 확인
+
+    fetch('/artpost/create-exhibition', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(exhibitionData)
+    })
+            .then(response => response.json())
+            .then(data => {
+              const exhibitionListElement = document.getElementById('exhibitionList');
+              exhibitionListElement.innerHTML = ''; // 기존 목록을 지웁니다.
+              data.forEach(exhibition => {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                nameCell.textContent = exhibition.name;
+                row.appendChild(nameCell);
+                const locationCell = document.createElement('td');
+                locationCell.textContent = exhibition.location;
+                row.appendChild(locationCell);
+                const holidayInfoCell = document.createElement('td');
+                holidayInfoCell.textContent = exhibition.holidayInfo;
+                row.appendChild(holidayInfoCell);
+                const discountInfoCell = document.createElement('td');
+                discountInfoCell.textContent = exhibition.discountInfo;
+                row.appendChild(discountInfoCell);
+                const noticeCell = document.createElement('td');
+                noticeCell.textContent = exhibition.notice;
+                row.appendChild(noticeCell);
+                const siteUrlCell = document.createElement('td');
+                siteUrlCell.textContent = exhibition.siteUrl;
+                row.appendChild(siteUrlCell);
+                exhibitionListElement.appendChild(row);
+              });
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  });
+</script>
+
+</body>
+</html>

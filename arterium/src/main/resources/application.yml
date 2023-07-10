@@ -16,10 +16,14 @@ spring:
   datasource:
     hikari:
 #      jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
-      url: jdbc:h2:~/testDB;MODE=MYSQL  #local test DB 저장
+    url: jdbc:h2:~/testDB;MODE=MYSQL  #local test DB 저장
     username: sa
     password:
     driver-class-name: org.h2.Driver
+  h2: # 테스트를 위해 테스트 DB 사용
+    console:
+      enabled: true
+      path: /h2-console
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
