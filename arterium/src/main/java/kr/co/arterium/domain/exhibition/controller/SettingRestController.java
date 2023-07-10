@@ -8,12 +8,15 @@ import kr.co.arterium.domain.exhibition.mapper.BookingSiteMapper;
 import kr.co.arterium.domain.exhibition.mapper.ExhibitionMapper;
 import kr.co.arterium.domain.exhibition.repository.BookingSiteRepository;
 import kr.co.arterium.domain.exhibition.repository.ExhibitionRepository;
+import kr.co.arterium.domain.exhibition.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class SettingRestController{
 
     private final ExhibitionRepository exhibitionRepository;
     private final BookingSiteRepository bookingSiteRepository;
+    private final FileService fileService;
 
     @GetMapping("/admin-page")
     public ModelAndView admin(ModelAndView modelAndView){
@@ -40,6 +44,7 @@ public class SettingRestController{
     @ResponseBody
     public ResponseEntity createExhibition(@RequestBody ExhibitionDTO exhibitionDTO){  // 전시회 리스트 더하기
         ExhibitionEntity entity = ExhibitionMapper.MAPPER.toEntity(exhibitionDTO);    //전시장 값 넣기
+        // TODO 이미지를 정규 이미지DB로 옮겨야 함
         exhibitionRepository.save(entity);  //전시장 값 DB 저장
         List<ExhibitionEntity> exhibitions = exhibitionRepository.findAll();    // 전시회 리스트 가져오기
         return ResponseEntity.ok(exhibitions);  //전시장 값을 Entity값으로 반환
@@ -60,6 +65,13 @@ public class SettingRestController{
         bookingSiteRepository.save(entity);  //전시장 값 DB 저장
         List<BookingSiteEntity> bookingSites = bookingSiteRepository.findAll();    // 전시회 리스트 가져오기
         return ResponseEntity.ok(bookingSites);  //전시장 값을 Entity값으로 반환
+    }
+
+    @PostMapping("/upload-image")
+    @ResponseBody
+    public ResponseEntity uploadImage(@RequestBody MultipartFile file){
+        Map<String, Object> responseData = fileService.saveTempImage(file);
+        return ResponseEntity.ok(responseData);
     }
 
 }
