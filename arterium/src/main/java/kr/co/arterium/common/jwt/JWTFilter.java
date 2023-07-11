@@ -1,12 +1,13 @@
 package kr.co.arterium.common.jwt;
 
-import kr.co.arterium.domain.user.service.UserDetailsService;
+import kr.co.arterium.domain.user.service.UserDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -98,11 +99,11 @@ public class JWTFilter extends OncePerRequestFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JWTFilter.class);
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private final TokenProvider tokenProvider;
-    private final UserDetailsService userDetailsService;
+    private final UserDetailService userDetailService;
 
     public JWTFilter(TokenProvider tokenProvider, UserDetailsService userDetailsService) {
         this.tokenProvider = tokenProvider;
-        this.userDetailsService = userDetailsService;
+        this.userDetailService = userDetailService;
     }
 
     @Override
@@ -113,7 +114,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             String email = tokenProvider.getUsernameFromToken(jwt);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            UserDetails userDetails = userDetailService.loadUserByUsername(email);
             if (userDetails != null) {
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());

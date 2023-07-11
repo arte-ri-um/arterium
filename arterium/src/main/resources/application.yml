@@ -29,3 +29,10 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: none
+
+  jwt:
+    header: Authorization
+    # secret은 알고리즘에 따라 길이 맞춤.
+    # SignatureAlgorithm.HS512 알고리즘을 사용할 예정이기 때문에 512자 이상의 값을 입력
+    secret: and0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdp
+    token-validity-in-seconds: 3600

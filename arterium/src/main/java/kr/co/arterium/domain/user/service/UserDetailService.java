@@ -1,12 +1,9 @@
 package kr.co.arterium.domain.user.service;
 
-import kr.co.arterium.domain.user.dto.UserDTO;
 import kr.co.arterium.domain.user.entity.UserEntity;
 import kr.co.arterium.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
