@@ -29,3 +29,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: none
+#  web:
+#    resources:
+#      static-locations:/static/
