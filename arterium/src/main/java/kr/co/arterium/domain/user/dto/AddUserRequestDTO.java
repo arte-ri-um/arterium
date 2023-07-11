@@ -26,16 +26,16 @@ public class AddUserRequestDTO {
 
     public UserEntity toEntity(AddUserRequestDTO dto) {
         return UserEntity.createUser()
-                .email(dto.getEmail())
-                .password(dto.getPassword())
-                .nickname(dto.getNickname())
-                .email(dto.getEmail())
-                .phone(dto.getPhone())
-                .birthdate(dto.getBirthdate())
-                .gender(dto.getGender())
-                .profileUrl(dto.getProfileUrl())
-                .userLevel(dto.getUserLevel())
-                .roleId(dto.getRoleId())
-                .build();
+            .email(dto.getEmail())
+            .password(dto.getPassword())
+            .nickname(dto.getNickname())
+            .email(dto.getEmail())
+            .phone(dto.getPhone())
+            .birthdate(dto.getBirthdate())
+            .gender(dto.getGender())
+            .profileUrl(dto.getProfileUrl())
+            .userLevel(dto.getUserLevel())
+            .roleId(dto.getRoleId())
+            .build();
     }
 }
