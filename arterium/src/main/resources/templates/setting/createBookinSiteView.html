@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>예매처 정보 입력</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+<h2>예매처 정보 입력</h2>
+<form id="bookingSiteForm" action="/create-booking-site" method="POST">
+  <div>
+    <label for="name">예매처 이름:</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  <div>
+    <label for="site_url">예매처 사이트 주소:</label>
+    <input type="url" id="site_url" name="siteUrl" required>
+  </div>
+  <div>
+    <label for="icon">예매처 아이콘 사진:</label>
+    <input type="file" id="icon" name="icon" required>
+    <div id="imagePreview"></div>
+  </div>
+  <input type="hidden" id="icon-url" name="iconUrl">
+  <button type="submit">예매처 정보 저장</button>
+</form>
+<!-- 예매처 리스트 -->
+<div>
+  <h3>예매처 리스트</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>예매처 이름</th>
+      <th>예매처 사이트 주소</th>
+      <th>예매처 아이콘 사진</th>
+    </tr>
+    </thead>
+    <tbody id="bookingSiteList">
+    <tr th:each="bookingSite : ${bookingSites}">
+      <td th:text="${bookingSite.name}"></td>
+      <td th:text="${bookingSite.siteUrl}"></td>
+      <td>
+        <img th:src="${bookingSite.iconUrl}" alt="Icon" width="50" height="50">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<a href="/admin-page">홈으로</a>
+<script>
+  const form = document.getElementById('bookingSiteForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // 기본 동작인 폼 제출을 막습니다.
+
+    // 폼의 입력 값을 가져와서 객체로 변환합니다.
+    const formData = new FormData(form);
+    const bookingSiteData = {};
+    formData.forEach((value, key) => {
+      bookingSiteData[key] = value;
+    });
+
+    fetch('/artpost/create-booking-site', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(bookingSiteData)
+    })
+            .then(response => response.json())
+            .then(data => {
+              const bookingSiteListElement = document.getElementById('bookingSiteList');
+              bookingSiteListElement.innerHTML = ''; // 기존 목록을 지웁니다.
+              data.forEach(bookingSite => {
+                const row = document.createElement('tr');
+                const nameCell = document.createElement('td');
+                nameCell.textContent = bookingSite.name;
+                row.appendChild(nameCell);
+                const siteUrlCell = document.createElement('td');
+                siteUrlCell.textContent = bookingSite.siteUrl;
+                row.appendChild(siteUrlCell);
+                const iconCell = document.createElement('td');
+                const iconImg = document.createElement('img');
+                iconImg.src = bookingSite.iconUrl;
+                iconImg.alt = 'Icon';
+                iconImg.width = 50;
+                iconImg.height = 50;
+                iconCell.appendChild(iconImg);
+                row.appendChild(iconCell);
+                bookingSiteListElement.appendChild(row);
+              });
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  });
+
+  // 파일 선택 이벤트 핸들러
+  function handleFileSelect(event) {
+    const file = event.target.files[0];
+
+    // FormData 객체 생성
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // fetch를 사용하여 서버로 파일 전송
+    fetch('/upload-image', {
+      method: 'POST',
+      body: formData
+    })
+            .then(response => {
+              // 응답 처리
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error('파일 업로드에 실패했습니다.');
+              }
+            })
+            .then(data => {
+              // 응답받은 값의 미리보기 업데이트
+              const previewElement = document.getElementById('imagePreview');
+              previewElement.innerHTML = ''; // 기존 미리보기를 지웁니다.
+              const imageElement = document.createElement('img');
+              imageElement.src = data.fileUrl;
+              imageElement.alt = 'Image Preview';
+              imageElement.width = 100;
+              imageElement.height = 100;
+              previewElement.appendChild(imageElement);
+
+              // URL 업데이트
+              const iconUrlInput = document.getElementById('icon-url');
+              iconUrlInput.value = data.fileUrl;
+            })
+            .catch(error => {
+              // 오류 처리
+              console.error(error);
+            });
+  }
+
+  // 파일 선택 input 요소에 이벤트 리스너 추가
+  const iconInput = document.getElementById('icon');
+  iconInput.addEventListener('change', handleFileSelect);
+</script>
+
+</body>
+</html>
