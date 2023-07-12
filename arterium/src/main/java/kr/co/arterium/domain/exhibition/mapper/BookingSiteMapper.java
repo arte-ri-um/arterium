@@ -14,4 +14,7 @@ public interface BookingSiteMapper extends EntityMapper<BookingSiteDTO, BookingS
 
     @Override
     BookingSiteEntity toEntity(final BookingSiteDTO dto);
+
+    @Override
+    BookingSiteDTO toDTO(final BookingSiteEntity entity);
 }

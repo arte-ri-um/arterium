@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- summernote   -->
+    <script src="/static/js/ckeditor5/ckeditor.js"></script>
+</head>
+<body>
+<h2>전시회 게시물 작성</h2>
+<form action="create-post" method="POST">
+    <!-- 전시장 고르기 -->
+    <label for="exhibition_id">전시장:</label>
+    <select name="exhibition_id" id="exhibition_id">
+        <option th:each="exhibition : ${exhibitions}" th:value="${exhibition.id}">
+            <span th:text="${exhibition.name}"></span>
+        </option>
+    </select>
+    <!-- 날짜 고르기 -->
+    <div>
+        <label for="start_date">시작일:</label>
+        <input type="date" name="start_date" id="start_date">
+        <label for="end_date">종료일:</label>
+        <input type="date" name="end_date" id="end_date">
+        <label for="viewing_time">관람시간:</label>
+        <input type="text" name="viewing_time" id="viewing_time">
+        <label for="age_restriction">관람연령:</label>
+        <input type="text" name="age_restriction" id="age_restriction">
+        <label for="price">정가:</label>
+        <input type="number" name="price" id="price">
+    </div>
+    <!-- 예약 사이트 등록하기 -->
+    <div>
+        <label for="is_eligibility">예매 가능 여부:</label>
+        <input type="radio" name="is_eligibility" id="is_eligibility_yes" value="1">
+        <label for="is_eligibility_yes">예</label>
+        <input type="radio" name="is_eligibility" id="is_eligibility_no" value="0">
+        <label for="is_eligibility_no">아니오</label>
+        <div id="eligibility_info" style="display: none;">
+            <label for="eligibility_date">티켓 오픈일, 예매 시작일:</label>
+            <input type="date" name="eligibility_date" id="eligibility_date">
+            <div id="reservation-sites-container">
+                <div class="reservation-site-row">
+                    <select name="reservation_site" class="reservation-site">
+                        <option th:each="site : ${bookingSites}" th:value="${site.id}" th:text="${site.name}"></option>
+                    </select>
+                    <input type="url" name="reservation_url" class="reservation-url">
+                    <button type="button" class="add-button">추가</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <label for="summary">요약:</label>
+        <textarea name="summary" id="summary"></textarea>
+        <label for="orign_url">전시 소개가 자세히 적힌 URL:</label>
+        <input type="url" name="orign_url" id="orign_url">
+    </div>
+    <div>
+        <label for="editor">설명:</label>
+        <textarea name="description" id="editor"></textarea>
+    </div>
+    <button type="submit">저장</button>
+</form>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    ClassicEditor.create( document.querySelector( '#editor' ) );
+
+    // 예매 가능 여부 정보 토글 함수
+    function toggleEligibilityInfo() {
+        var radio = document.querySelector('input[name="is_eligibility"]:checked');
+        var eligibilityInfo = document.getElementById("eligibility_info");
+        var reservationSitesContainer = document.getElementById("reservation-sites-container");
+
+        // 예 버튼이 선택된 경우
+        if (radio && radio.value === "1") {
+            eligibilityInfo.style.display = "block";
+        } else {
+            eligibilityInfo.style.display = "none";
+            reservationSitesContainer.innerHTML = ""; // URL 입력 부분 초기화
+            addInputRow(false);
+        }
+    }
+
+    // 추가 버튼 클릭 시 새로운 입력 창을 추가하는 함수
+    function addInputRow(hasVariable) {
+        var container = document.getElementById("reservation-sites-container");
+        var row = document.createElement("div");
+        row.classList.add("reservation-site-row");
+
+        var siteSelect = document.createElement("select");
+        siteSelect.name = "reservation_site";
+        siteSelect.classList.add("reservation-site");
+        // 예약사이트 옵션 추가
+        var bookingSites = /*[[${bookingSites}]]*/ [];
+
+        bookingSites.forEach(function(site) {
+            var option = document.createElement("option");
+            option.value = site.id;
+            option.textContent = site.name;
+            siteSelect.appendChild(option);
+        });
+
+        var urlInput = document.createElement("input");
+        urlInput.type = "url";
+        urlInput.name = "reservation_url";
+        urlInput.classList.add("reservation-url");
+
+        var addButton = document.createElement("button");
+        addButton.type = "button";
+        addButton.classList.add("add-button");
+        addButton.textContent = "추가";
+        addButton.addEventListener("click", addInputRow);
+
+        var removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.classList.add("remove-button");
+        removeButton.textContent = "삭제";
+        removeButton.addEventListener("click", removeInputRow);
+
+        row.appendChild(siteSelect);
+        row.appendChild(urlInput);
+        row.appendChild(addButton);
+        container.appendChild(row);
+
+        if (hasVariable) {// 기존 입력 창의 추가 버튼을 삭제 버튼으로 변경
+            var existingAddButton = document.querySelector(".add-button");
+            existingAddButton.classList.remove("add-button");
+            existingAddButton.classList.add("remove-button");
+            existingAddButton.textContent = "삭제";
+            existingAddButton.removeEventListener("click", addInputRow);
+            existingAddButton.addEventListener("click", removeInputRow);
+        }
+    }
+
+    // 삭제 버튼 클릭 시 해당 입력 창 제거하는 함수
+    function removeInputRow(event) {
+        var row = event.target.parentElement;
+        row.remove();
+    }
+
+    // 전송 제어
+    function handleSubmit(event) {
+        event.preventDefault(); // 기본 동작 방지
+
+        // 전시 정보
+        const exhibitionId = document.getElementById('exhibition_id').value;
+        const startDate = document.getElementById('start_date').value;
+        const endDate = document.getElementById('end_date').value;
+        const viewingTime = document.getElementById('viewing_time').value;
+        const ageRestriction = document.getElementById('age_restriction').value;
+        const price = document.getElementById('price').value;
+
+        // 예매 가능 여부
+        const isEligibility = document.querySelector('input[name="is_eligibility"]:checked').value;
+        const eligibilityDate = document.getElementById('eligibility_date').value;
+
+        // 예매 사이트 정보
+        const reservationSites = document.querySelectorAll('.reservation-site-row');
+        const bookingLinks = [];
+
+        reservationSites.forEach(site => {
+            const siteId = site.querySelector('.reservation-site').value;
+            const bookingUrl = site.querySelector('.reservation-url').value;
+
+            bookingLinks.push({
+                postId: null, // 이 부분은 서버 처리
+                siteId,
+                bookingUrl
+            });
+        });
+
+        // 요약 및 설명
+        const summary = document.getElementById('summary').value;
+        const originUrl = document.getElementById('orign_url').value;
+        const description = document.getElementById('editor').value;
+
+        //
+        var PostDTO = {
+            exhibitionId: exhibitionId,
+            startDate: startDate,
+            endDate: endDate,
+            viewingTime: viewingTime,
+            ageRestriction: ageRestriction,
+            price: price,
+            isEligibility: isEligibility,
+            eligibilityDate: eligibilityDate,
+            bookingLinks: bookingLinks,
+            summary: summary,
+            originUrl: originUrl,
+            description: description
+        };
+
+        fetch('/artpost/create-post', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(PostDTO)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 서버 응답 처리
+            })
+            .catch(error => {
+                // 오류 처리
+            });
+    }
+
+
+    // 페이지 로드 시 초기 입력 창 이벤트 처리
+    document.addEventListener("DOMContentLoaded", function() {
+        //토글처리
+        var radioButtons = document.querySelectorAll('input[name="is_eligibility"]');
+        radioButtons.forEach(function(radio) {
+            radio.addEventListener("change", toggleEligibilityInfo);
+        });
+
+        //행 추가
+        var addButton = document.querySelector(".add-button");
+        addButton.addEventListener("click", addInputRow);
+
+        //
+        var form = document.querySelector('form');
+        form.addEventListener('submit', handleSubmit); // 폼(submit) 이벤트 처리
+    });
+
+    /*]]>*/
+</script>
+</body>
+</html>

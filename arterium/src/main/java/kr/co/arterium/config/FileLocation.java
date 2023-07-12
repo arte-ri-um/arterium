@@ -1,7 +1,7 @@
 package kr.co.arterium.config;
 
 public enum FileLocation {
-    TEMP_IMAGE("classpath:/static/image/temp/"),
+    TEMP_IMAGE("classpath:/static/img/temp/"),
     BOARD_ATTACHMENT("board-attachments/");
 
     private final String location;

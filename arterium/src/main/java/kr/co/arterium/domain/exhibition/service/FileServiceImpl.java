@@ -60,7 +60,7 @@ public class FileServiceImpl implements FileService {
         // 파일 db id와 url 회신
         Map<String,Object> response = new HashMap<>();
         response.put("fileId", imageTempEntity.getId());
-        response.put("fileUrl", "/static/image/temp/" + saveName);
+        response.put("fileUrl", "/static/img/temp/" + saveName);
 
         return response;
     }
