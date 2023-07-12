@@ -4,8 +4,6 @@ spring:
       enabled: true
     restart:
       enabled: true
-  mvc:
-    static-path-pattern: /static/**
   thymeleaf:
     check-template-location: true
     prefix: classpath:/templates/
@@ -35,6 +33,9 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: none
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
 
 #  web:
 #    resources:
