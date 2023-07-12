@@ -13,8 +13,8 @@ public interface BookingSiteMapper extends EntityMapper<BookingSiteDTO, BookingS
     BookingSiteMapper MAPPER = Mappers.getMapper(BookingSiteMapper.class);
 
     @Override
-    BookingSiteEntity toEntity(final BookingSiteDTO dto);
+    BookingSiteEntity toEntity(final BookingSiteDTO dto);   // dto -> entity
 
     @Override
-    BookingSiteDTO toDTO(final BookingSiteEntity entity);
+    BookingSiteDTO toDTO(final BookingSiteEntity entity);   //entity -> dto
 }

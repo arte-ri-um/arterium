@@ -201,7 +201,7 @@
         })
             .then(response => response.json())
             .then(data => {
-                // 서버 응답 처리
+                window.location.href = data.redirectUrl; // 리다이렉트 처리
             })
             .catch(error => {
                 // 오류 처리

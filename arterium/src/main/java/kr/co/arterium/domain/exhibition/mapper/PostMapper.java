@@ -1,6 +1,8 @@
 package kr.co.arterium.domain.exhibition.mapper;
 
+import kr.co.arterium.domain.exhibition.dto.ExhibitionDTO;
 import kr.co.arterium.domain.exhibition.dto.PostDTO;
+import kr.co.arterium.domain.exhibition.dto.PostViewDTO;
 import kr.co.arterium.domain.exhibition.entity.ExhibitionEntity;
 import kr.co.arterium.domain.exhibition.entity.PostEntity;
 import kr.co.arterium.domain.user.entity.UserEntity;
@@ -18,7 +20,7 @@ public interface PostMapper extends EntityMapper<PostDTO, PostEntity> {
 
     PostMapper MAPPER = Mappers.getMapper(PostMapper.class);
 
-    default PostEntity toEntityWithDefault(PostDTO postDTO){
+    default PostEntity toEntityWithDefault(PostDTO postDTO){    // dto -> entity
 
         //default값 설정
         String viewingTime = postDTO.getViewingTime() != null ? postDTO.getViewingTime() : "전시장 시간 참조";
@@ -28,7 +30,7 @@ public interface PostMapper extends EntityMapper<PostDTO, PostEntity> {
 
         //entity 설정
         return PostEntity.builder()
-                .user(UserEntity.UserBuilder().id(postDTO.getId()).build())
+                .user(UserEntity.UserBuilder().id(postDTO.getUserId()).build())
                 .exhibition(ExhibitionEntity.builder().id(postDTO.getExhibitionId()).build())
                 .startDate(postDTO.getStartDate())
                 .endDate(postDTO.getEndDate())
@@ -41,6 +43,27 @@ public interface PostMapper extends EntityMapper<PostDTO, PostEntity> {
                 .isEligibility(isEligibility)
                 .eligibilityDate(postDTO.getEligibilityDate())
                 .regDate(LocalDate.now())
+                .build();
+    }
+
+    default PostViewDTO toViewDTO(PostEntity entity){   //entity -> dto
+
+        ExhibitionDTO exhibitionDTO = ExhibitionMapper.MAPPER.toDTO(entity.getExhibition());
+        return PostViewDTO.builder()
+                .id(entity.getId())
+                .userId(entity.getUser().getId())
+                .userNickname(entity.getUser().getNickname())
+                .exhibitionDTO(exhibitionDTO)
+                .startDate(entity.getStartDate())
+                .endDate(entity.getEndDate())
+                .viewingTime(entity.getViewingTime())
+                .ageRestriction(entity.getAgeRestriction())
+                .price(entity.getPrice())
+                .summary(entity.getSummary())
+                .description(entity.getDescription())
+                .originUrl(entity.getOriginUrl())
+                .isEligibility(entity.getIsEligibility())
+                .eligibilityDate(entity.getEligibilityDate())
                 .build();
     }
 

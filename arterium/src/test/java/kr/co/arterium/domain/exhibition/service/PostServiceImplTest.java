@@ -3,6 +3,7 @@ package kr.co.arterium.domain.exhibition.service;
 import kr.co.arterium.domain.exhibition.dto.BookingLinkDTO;
 import kr.co.arterium.domain.exhibition.dto.BookingSiteDTO;
 import kr.co.arterium.domain.exhibition.dto.PostDTO;
+import kr.co.arterium.domain.exhibition.dto.PostViewDTO;
 import kr.co.arterium.domain.exhibition.entity.BookingLinkEntity;
 import kr.co.arterium.domain.exhibition.entity.BookingSiteEntity;
 import kr.co.arterium.domain.exhibition.entity.PostEntity;
@@ -20,7 +21,9 @@ import org.springframework.test.annotation.Rollback;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @SpringBootTest
 @Rollback(true) //rollback 꼭 넣어주기, id 예측이 힘들어짐
@@ -96,8 +99,8 @@ class PostServiceImplTest {
 
         // 예약 사이트 링크 처리
         // postId입력 후 entity 변환 처리
-        List<BookingLinkDTO> bookingLinkDTOList = postDTO.getBookingLinks();
-        List<BookingLinkEntity> bookingLinkEntityList = bookingLinkDTOList.stream()
+        List<BookingLinkDTO> bookingLinkDTOLists = postDTO.getBookingLinks();
+        List<BookingLinkEntity> bookingLinkEntityList = bookingLinkDTOLists.stream()
                 .peek(bookingLink -> bookingLink.setPostId(postId))
                 .map(BookingLinkMapper.MAPPER::toEntity)
                 .collect(Collectors.toList());
@@ -107,4 +110,22 @@ class PostServiceImplTest {
         System.out.println("postId = " + postId);
 
     }
+
+    @Test
+    @Transactional
+    public void findPostById() {    // 포스트 view 정조 가져오기
+        Long postId = 10L;
+        Optional<PostEntity> entity = postRepository.findById(postId);
+        PostEntity postEntity = entity.isPresent() ? entity.get() : null;
+        PostViewDTO postDTO = PostMapper.MAPPER.toViewDTO(postEntity);
+        List<BookingLinkEntity> bookingLinkEntities = bookingLinkRepository.findAllByPostId(11L);
+        List<BookingLinkDTO> bookingDTOs = bookingLinkEntities != null
+                ? bookingLinkEntities.stream()
+                .map(bookingLink -> BookingLinkMapper.MAPPER.toDTO(bookingLink))
+                .collect(Collectors.toList())
+                : Collections.emptyList();
+        postDTO.setBookingLinks(bookingDTOs);
+        System.out.println(postDTO.getBookingLinks().toString());
+    }
+
 }

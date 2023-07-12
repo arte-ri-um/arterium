@@ -12,5 +12,5 @@ public interface ExhibitionMapper extends EntityMapper<ExhibitionDTO, Exhibition
     ExhibitionMapper MAPPER = Mappers.getMapper(ExhibitionMapper.class);
 
     @Override
-    ExhibitionEntity toEntity(final ExhibitionDTO dto);
+    ExhibitionEntity toEntity(final ExhibitionDTO dto); // dto -> entity
 }

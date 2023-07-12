@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>전시회 게시물 확인</h2>
+
+ postDTO 결과를 표시하는 부분
+<div>
+    <p>Post ID: <span th:text="${postDTO.id}"></span></p>
+    <p>User ID: <span th:text="${postDTO.userId}"></span></p>
+    <p>User Nickname: <span th:text="${postDTO.userNickname}"></span></p>
+    <p>Exhibition ID: <span th:text="${postDTO.exhibitionDTO.id}"></span></p>
+    <p>Exhibition Name: <span th:text="${postDTO.exhibitionDTO.name}"></span></p>
+    <p>Exhibition Location: <span th:text="${postDTO.exhibitionDTO.location}"></span></p>
+    <p>Start Date: <span th:text="${postDTO.startDate}"></span></p>
+    <p>End Date: <span th:text="${postDTO.endDate}"></span></p>
+    <p>Viewing Time: <span th:text="${postDTO.viewingTime}"></span></p>
+    <p>Age Restriction: <span th:text="${postDTO.ageRestriction}"></span></p>
+    <p>Price: <span th:text="${postDTO.price}"></span></p>
+    <p>Summary: <span th:text="${postDTO.summary}"></span></p>
+    <p>Description: <span th:utext="${postDTO.description}"></span></p>
+    <p>Origin URL: <span th:text="${postDTO.originUrl}"></span></p>
+    <p>Is Eligibility: <span th:text="${postDTO.isEligibility}"></span></p>
+    <p>Eligibility Date: <span th:text="${postDTO.eligibilityDate}"></span></p>
+    <p>Booking Links:</p>
+    <ul>
+        <li th:each="bookingLink : ${postDTO.bookingLinks}">
+            <span th:text="${bookingLink.bookingUrl}"></span>
+        </li>
+    </ul>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    /*]]>*/
+</script>
+</body>
+</html>

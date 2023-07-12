@@ -26,7 +26,7 @@ public class FileServiceImpl implements FileService {
     private final ImageTempRepository imageTempRepository;
     private final ResourceLoader resourceLoader;
     @Override
-    public Map<String, Object> saveTempImage(MultipartFile file) {
+    public Map<String, Object> saveTempImage(MultipartFile file) {  //파일 저장 처리
         //파일 정보
         FileLocation fileLocation = FileLocation.TEMP_IMAGE;
         String originalName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -64,7 +64,7 @@ public class FileServiceImpl implements FileService {
 
         return response;
     }
-    private static String getFileExtension(String filename) {
+    private static String getFileExtension(String filename) {   // 확장자 처리
         if (filename == null) {
             return "";
         }
@@ -75,7 +75,7 @@ public class FileServiceImpl implements FileService {
         return filename.substring(dotIndex + 1).toLowerCase();
     }
 
-    private static String generateSaveName(String extension) {
+    private static String generateSaveName(String extension) {  // 저장 이름 만들기
         String randomUUID = UUID.randomUUID().toString();
         LocalDateTime now = LocalDateTime.now();
         String timestamp = now.toString().replace(":", "-");

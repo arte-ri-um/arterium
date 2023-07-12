@@ -10,18 +10,18 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookingLinkEntity {
+public class BookingLinkEntity {//예매 사이트 url 저장
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id; //예매사이트 url id
 
     @Column(name = "post_id")
-    private long postId;
+    private Long postId; //포스트id
 
     @Column(name = "site_id")
-    private long siteId;
+    private Long siteId; //예매사이트 id
 
     @Column(name = "booking_url")
-    private String bookingUrl;
+    private String bookingUrl; //예매 링크
 }

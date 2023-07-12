@@ -27,7 +27,7 @@ public class SettingRestController{
     private final FileService fileService;
 
     @GetMapping("/admin-page")
-    public ModelAndView admin(ModelAndView modelAndView){
+    public ModelAndView admin(ModelAndView modelAndView){   // 관리자 페이지 : 관리자가 전시장과 예매처를 관리한다 가정
         modelAndView.setViewName("setting/settingPage");
         return modelAndView;
     }
@@ -69,8 +69,8 @@ public class SettingRestController{
 
     @PostMapping("/upload-image")
     @ResponseBody
-    public ResponseEntity uploadImage(@RequestBody MultipartFile file){
-        Map<String, Object> responseData = fileService.saveTempImage(file);
+    public ResponseEntity uploadImage(@RequestBody MultipartFile file){ //비동기로 이미지 업로드 -> 파일아이디와 url을 반환함
+        Map<String, Object> responseData = fileService.saveTempImage(file);     //이미지 임시 저장 및 정보 처리
         return ResponseEntity.ok(responseData);
     }
 
