@@ -46,6 +46,9 @@ dependencies {
     // 뷰
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    implementation 'org.webjars:bootstrap:5.2.3'
+    implementation 'org.webjars:jquery:3.6.4'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 
     //mapstruct - entity와 dto 변환
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
