@@ -10,6 +10,7 @@ public interface ReviewService {
 
     Long create(ReviewDTO reviewDto, Long userId, Long postId);
     Optional<ReviewEntity> findOneById(Long id);
+//    Optional<ReviewEntity> findOneByPostId(Long postId);
     List<ReviewEntity> findReviews();
     List<ReviewEntity> findReviewsByPostId(Long postId);
 }

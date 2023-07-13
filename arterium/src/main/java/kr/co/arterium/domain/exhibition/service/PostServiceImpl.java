@@ -15,7 +15,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<PostEntity> findByPostId(Long id){
+    public Optional<PostEntity> findById(Long id){
         return postRepository.findById(id);
     }
 }

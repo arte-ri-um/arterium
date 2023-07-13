@@ -2,6 +2,7 @@ package kr.co.arterium.domain.exhibition.entity;
 
 import kr.co.arterium.domain.user.entity.UserEntity;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,8 +32,11 @@ public class ReviewEntity {
     private String content;
 
     @Column(name="created_at", updatable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
+
     @Column(name="updated_at")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime updatedAt;
 
     @Column
@@ -45,7 +49,7 @@ public class ReviewEntity {
         this.updatedAt = now;
     }
 
-//    public void setMember(UserEntity user){
+//    public void setUser(UserEntity user){
 //        // 기존 관계 제거
 //        if(this.user != null){
 //            this.user.getReviews().remove(this);

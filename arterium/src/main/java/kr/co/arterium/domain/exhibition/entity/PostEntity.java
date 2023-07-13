@@ -14,4 +14,5 @@ public class PostEntity {
     @Id //primary key
     @Column(name="id")
     private Long id;
+
 }

@@ -75,7 +75,7 @@ CREATE TABLE post (
                       price INT COMMENT '정가',
                       summary VARCHAR(500) COMMENT '요약',
                       description TEXT COMMENT '설명',
-                      orign_url VARCHAR(500) COMMENT '전시 소개가 자세히 적힌 URL',
+                      origin_url VARCHAR(500) COMMENT '전시 소개가 자세히 적힌 URL',
                       is_eligibility INT COMMENT '예매 가능 여부',
                       eligibility_date DATETIME COMMENT '티켓 오픈일, 예매 시작일',
                       reg_date DATETIME COMMENT '포스트 등록일',
@@ -91,9 +91,10 @@ CREATE TABLE review (
                         post_id BIGINT COMMENT '게시물 식별자 (post id 외래키)',
                         user_id BIGINT COMMENT '게시자 (user id 외래키)',
                         content TEXT COMMENT '리뷰 내용',
-                        created_at DATETIME COMMENT '리뷰 작성일시',
-                        updated_at DATETIME COMMENT '리뷰 수정내용',
+                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '리뷰 작성일시',
+                        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '리뷰 수정일시',
                         rating INT COMMENT '별점',
+                        likes INT DEFAULT 0 COMMENT '추천수',
                         FOREIGN KEY (post_id) REFERENCES post(id),
                         FOREIGN KEY (user_id) REFERENCES users(id)
 );

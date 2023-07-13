@@ -6,7 +6,7 @@ import kr.co.arterium.domain.exhibition.entity.BookingSiteEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-07-12T07:16:51+0900",
+    date = "2023-07-12T15:52:56+0900",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 11.0.17 (Oracle Corporation)"
 )
 public class BookingSiteMapperImpl implements BookingSiteMapper {

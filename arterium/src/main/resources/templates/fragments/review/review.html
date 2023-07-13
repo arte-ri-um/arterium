@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- 리뷰 -->
+<section th:fragment="review" class="wrapper bg-light">
+    <div class="container py-14 py-md-16">
+        <section class="wrapper bg-light">
+            <div class="container py-14 py-md-16">
+                <div class="row gx-md-8 gx-xl-12 gy-10">
+                    <aside class="col-lg-4 sidebar">
+                        <div class="widget mt-1">
+                            <h4 class="widget-title mb-3">별점 분포</h4>
+                            <div class="mb-5">
+                                <span class="ratings four"></span>
+                                <span>4.2/5</span>
+                                <span>(3 Reviews)</span>
+                            </div>
+                            <ul class="progress-list">
+                                <li>
+                                    <p>5점</p>
+                                    <div class="progressbar line blue" data-value="82">
+                                        <svg viewBox="0 0 100 6" preserveAspectRatio="none"
+                                             style="display: block; width: 100%;">
+                                        </svg>
+                                        <div class="progressbar-text"
+                                             style="color: inherit; position: absolute; right: 0px; top: -30px; padding: 0px; margin: 0px;">
+                                            82 %
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p>4점</p>
+                                    <div class="progressbar line blue" data-value="8">
+                                        <svg viewBox="0 0 100 6" preserveAspectRatio="none"
+                                             style="display: block; width: 100%;">
+                                        </svg>
+                                        <div class="progressbar-text"
+                                             style="color: inherit; position: absolute; right: 0px; top: -30px; padding: 0px; margin: 0px;">
+                                            8 %
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p>3점</p>
+                                    <div class="progressbar line blue" data-value="5">
+                                        <svg viewBox="0 0 100 6" preserveAspectRatio="none"
+                                             style="display: block; width: 100%;">
+                                        </svg>
+                                        <div class="progressbar-text"
+                                             style="color: inherit; position: absolute; right: 0px; top: -30px; padding: 0px; margin: 0px;">
+                                            5 %
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p>2점</p>
+                                    <div class="progressbar line blue" data-value="3">
+                                        <svg viewBox="0 0 100 6" preserveAspectRatio="none"
+                                             style="display: block; width: 100%;">
+                                        </svg>
+                                        <div class="progressbar-text"
+                                             style="color: inherit; position: absolute; right: 0px; top: -30px; padding: 0px; margin: 0px;">
+                                            3 %
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p>1점</p>
+                                    <div class="progressbar line blue" data-value="2">
+                                        <svg viewBox="0 0 100 6" preserveAspectRatio="none"
+                                             style="display: block; width: 100%;">
+                                        </svg>
+                                        <div class="progressbar-text"
+                                             style="color: inherit; position: absolute; right: 0px; top: -30px; padding: 0px; margin: 0px;">
+                                            2 %
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- /.progress-list -->
+                        </div>
+                        <!-- /.widget -->
+
+                        <div class="widget mt-10">
+                            <h4 class="widget-title mb-3">리뷰를 작성해보세요!</h4>
+                            <a th:href="@{/{postId}/review/create(postId=${postId})}"
+                               class="btn btn-primary rounded w-100">리뷰 쓰기</a>
+                        </div>
+                        <!-- /.widget -->
+                    </aside>
+                    <!-- /column .sidebar -->
+
+                    <div class="col-lg-8">
+                        <div class="row align-items-center mb-10 position-relative zindex-1">
+                            <div class="col-md-7 col-xl-8 pe-xl-20">
+                                <h2 class="display-6 mb-0">Reviews</h2>
+                            </div>
+                            <!--/column -->
+                            <!--                                리뷰 정렬 순서-->
+                            <div class="col-md-5 col-xl-4 ms-md-auto text-md-end mt-5 mt-md-0">
+                                <div class="form-select-wrapper">
+                                    <select class="form-select">
+                                        <option value="newest">최신 순</option>
+                                        <option value="oldest">오래된 순</option>
+                                        <option value="popular">추천순</option>
+                                        <option value="high-rating">높은 별점 순</option>
+                                        <option value="low-rating">낮은 별점 순</option>
+                                    </select>
+                                </div>
+                                <!--/.form-select-wrapper -->
+                            </div>
+                            <!--/column -->
+                        </div>
+                        <!--/.row -->
+
+                        <div id="comments">
+                            <ol id="singlecomments" class="commentlist">
+                                <th:block th:each="review : ${reviews}">
+                                    <li class="comment">
+                                        <div class="comment-header d-md-flex align-items-center">
+                                            <figure class="user-avatar">
+                                                <img class="rounded-circle" alt=""
+                                                     th:if="${review.user.getProfileUrl() != null}"
+                                                     th:src="${review.user.getProfileUrl()}">
+
+                                                <img class="rounded-circle" alt=""
+                                                     th:unless="${review.user.getProfileUrl() != null}"
+                                                     th:src="@{/img/users/default.png}">
+                                            </figure>
+                                            <div>
+                                                <h6 class="comment-author"><a
+                                                        th:text="${review.user.getNickname()}"
+                                                        class="link-dark"></a></h6>
+                                                <ul class="post-meta">
+                                                    <li><i class="uil uil-calendar-alt"
+                                                           th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd')}"></i>
+                                                    </li>
+                                                </ul>
+                                                <!-- /.post-meta -->
+                                            </div>
+                                            <!-- /div -->
+                                        </div>
+                                        <!-- /.comment-header -->
+                                        <div class="d-flex flex-row align-items-center mt-5 mb-2">
+                                                    <span th:if="${review.getRating() == 5}"
+                                                          class="ratings five"></span>
+                                            <span th:if="${review.getRating() == 4}"
+                                                  class="ratings four"></span>
+                                            <span th:if="${review.getRating() == 3}"
+                                                  class="ratings three"></span>
+                                            <span th:if="${review.getRating() == 2}" class="ratings two"></span>
+                                            <span th:if="${review.getRating() == 1}" class="ratings one"></span>
+                                        </div>
+                                        <p th:text="${review.content}"></p>
+                                        <div class="d-flex flex-row align-items-center pb-3">
+                                            <p class="text-muted fs-15 mb-0 me-5">리뷰가 도움이 되었나요?</p>
+                                            <div>
+                                                <a href="#" class="link-dark me-3"><i
+                                                        class="uil uil-thumbs-up"></i>
+                                                    5</a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <div th:if="${review.user.getId() == session.id}">
+                                        <button class="btn btn-primary rounded px-3 w-50 h-50">
+                                            <a th:href="@{/{postId}/review/{id}/update(postId=${postId}, id=${review.id})}">수정</a>
+                                        </button>
+                                        <button class="btn btn-block btn-red rounded px-3 w-50 h-50">
+                                            <a th:href="@{/{postId}/review/{id}/delete(postId=${postId}, id=${review.id})}">삭제</a>
+                                        </button>
+                                    </div>
+                                </th:block>
+                            </ol>
+                        </div>
+                        <!-- /#comments -->
+                        <nav class="d-flex mt-10" aria-label="pagination">
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true"><i class="uil uil-arrow-left"></i></span>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true"><i class="uil uil-arrow-right"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- /.pagination -->
+                        </nav>
+                        <!-- /nav -->
+                    </div>
+                    <!-- /column -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+    </div>
+</section>
+</html>
