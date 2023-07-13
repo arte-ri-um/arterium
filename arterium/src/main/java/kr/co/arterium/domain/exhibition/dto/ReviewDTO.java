@@ -1,8 +1,5 @@
 package kr.co.arterium.domain.exhibition.dto;
 
-import kr.co.arterium.domain.exhibition.entity.PostEntity;
-import kr.co.arterium.domain.exhibition.entity.ReviewEntity;
-import kr.co.arterium.domain.user.entity.UserEntity;
 import lombok.*;
 
 

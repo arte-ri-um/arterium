@@ -78,6 +78,7 @@ DROP TABLE IF EXISTS post;
 
 CREATE TABLE post (
     id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '포스트 아이디',
+    title varchar(500) COMMENT '제목',
     user_id BIGINT comment '작성자',
     exhibition_id BIGINT COMMENT '전시장 (exhibition id 외래키)',
     start_date DATETIME COMMENT '시작일',

@@ -4,7 +4,8 @@ import kr.co.arterium.domain.exhibition.dto.BookingSiteDTO;
 import kr.co.arterium.domain.exhibition.dto.ExhibitionDTO;
 import kr.co.arterium.domain.exhibition.dto.PostDTO;
 import kr.co.arterium.domain.exhibition.dto.PostViewDTO;
-import org.springframework.stereotype.Service;
+import kr.co.arterium.domain.exhibition.entity.PostEntity;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface PostService {
     Long createPost(PostDTO postDTO);//포스트 생성하기
 
     PostViewDTO findPostById(Long postId); //postId로 페이지 정보 가져오기
+
+    Optional<PostEntity> findByPostId(Long id);
 }

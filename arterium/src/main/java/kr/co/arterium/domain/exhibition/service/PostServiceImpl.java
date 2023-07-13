@@ -15,8 +15,8 @@ import kr.co.arterium.domain.exhibition.repository.ExhibitionRepository;
 import kr.co.arterium.domain.exhibition.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -84,4 +84,11 @@ public class PostServiceImpl implements PostService{
 
         return postDTO;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<PostEntity> findByPostId(Long id){
+        return postRepository.findById(id);
+    }
+
 }

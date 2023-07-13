@@ -7,7 +7,6 @@ import kr.co.arterium.domain.exhibition.entity.ExhibitionEntity;
 import kr.co.arterium.domain.exhibition.entity.PostEntity;
 import kr.co.arterium.domain.user.entity.UserEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -31,6 +30,7 @@ public interface PostMapper extends EntityMapper<PostDTO, PostEntity> {
         //entity 설정
         return PostEntity.builder()
                 .user(UserEntity.UserBuilder().id(postDTO.getUserId()).build())
+                .title(postDTO.getTitle())
                 .exhibition(ExhibitionEntity.builder().id(postDTO.getExhibitionId()).build())
                 .startDate(postDTO.getStartDate())
                 .endDate(postDTO.getEndDate())
@@ -42,7 +42,7 @@ public interface PostMapper extends EntityMapper<PostDTO, PostEntity> {
                 .originUrl(postDTO.getOriginUrl())
                 .isEligibility(isEligibility)
                 .eligibilityDate(postDTO.getEligibilityDate())
-                .regDate(LocalDate.now())
+                .regDate(LocalDateTime.now())
                 .build();
     }
 
@@ -51,6 +51,7 @@ public interface PostMapper extends EntityMapper<PostDTO, PostEntity> {
         ExhibitionDTO exhibitionDTO = ExhibitionMapper.MAPPER.toDTO(entity.getExhibition());
         return PostViewDTO.builder()
                 .id(entity.getId())
+                .title(entity.getTitle())
                 .userId(entity.getUser().getId())
                 .userNickname(entity.getUser().getNickname())
                 .exhibitionDTO(exhibitionDTO)
@@ -64,6 +65,7 @@ public interface PostMapper extends EntityMapper<PostDTO, PostEntity> {
                 .originUrl(entity.getOriginUrl())
                 .isEligibility(entity.getIsEligibility())
                 .eligibilityDate(entity.getEligibilityDate())
+                .regDate(entity.getRegDate())
                 .build();
     }
 

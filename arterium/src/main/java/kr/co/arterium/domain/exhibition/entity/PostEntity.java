@@ -21,6 +21,8 @@ public class PostEntity {//포스트 생성 정보 저장
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //포스트ID
+    
+    private String title;   //포스트 제목
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -61,7 +63,7 @@ public class PostEntity {//포스트 생성 정보 저장
     private LocalDate eligibilityDate;  // 일찍 예약 시작 날짜
 
     @Column(name = "reg_date")
-    private LocalDate regDate;  //post생성 시간
+    private LocalDateTime regDate;  //post생성 시간
 
     @Column(name = "post_url")
     private String postUrl; //예약 url

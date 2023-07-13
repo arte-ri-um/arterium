@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 public class PostDTO {  //포스트 생성 정보
     private Long id;    //포스트ID
+    private String title;   //포스트제목
     private Long userId;    //사용자 ID
     private Long exhibitionId;  //전시장 ID
     private LocalDate startDate;    //시작날짜
