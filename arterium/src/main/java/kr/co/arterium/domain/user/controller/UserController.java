@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +24,11 @@ import java.util.Collections;
 public class UserController {
     private final UserService userService;
     private final TokenProvider tokenProvider; // 토큰 검증
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     // TODO : 예외처리 해야한다.
 
+    // 다시 만들기
     @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody AddUserRequestDTO userRequestDTO){
         Long signedUserId = userService.signUp(userRequestDTO);

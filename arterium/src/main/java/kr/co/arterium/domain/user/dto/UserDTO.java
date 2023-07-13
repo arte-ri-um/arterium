@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+// 사용자 정보 담기
+// 유저 조회
 @Getter
 @NoArgsConstructor
 public class UserDTO {

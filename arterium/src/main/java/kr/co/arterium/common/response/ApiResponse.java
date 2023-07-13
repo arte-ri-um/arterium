@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+// api응답
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ApiResponse {

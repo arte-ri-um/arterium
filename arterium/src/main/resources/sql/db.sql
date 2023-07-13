@@ -30,6 +30,25 @@ CREATE TABLE users (
 
 
 
+-- 권한 테이블
+CREATE TABLE authority (
+                           authority_name VARCHAR(50) NOT NULL,
+                           PRIMARY KEY (authority_name)
+) COMMENT '권한';
+
+
+
+/*-- user와 authority join 하는 테이블, 유저엔티티에서 jointable로 자동생성
+CREATE TABLE user_authority (
+                                user_id bigint NOT NULL,
+                                authority_name varchar(50) NOT NULL,
+                                PRIMARY KEY (user_id, authority_name),
+                                FOREIGN KEY (user_id) REFERENCES users (id),
+                                FOREIGN KEY (authority_name) REFERENCES authority (authority_name)
+);*/
+
+
+
 
 CREATE TABLE oauth_user (
     id bigint NOT NULL AUTO_INCREMENT,

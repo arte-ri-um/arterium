@@ -1,28 +1,30 @@
 package kr.co.arterium.common.config;
 
-import kr.co.arterium.common.jwt.JWTSecurityConfig;
-import kr.co.arterium.common.jwt.JwtAccessDeniedHandler;
-import kr.co.arterium.common.jwt.JwtAuthenticationEntryPoint;
-import kr.co.arterium.common.jwt.TokenProvider;
+import kr.co.arterium.common.jwt.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import kr.co.arterium.domain.user.service.UserDetailService;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @RequiredArgsConstructor
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
 
     private final UserDetailService userDetailService;
-    //private final JwtManager jwtManager;
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -32,7 +34,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
-                .requestMatchers(toH2Console())
+                .requestMatchers(toH2Console()) // h2 DB 사용
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
@@ -43,9 +45,9 @@ public class WebSecurityConfig {
                 .csrf( csrf -> csrf.disable()) // TODO : csrf 비활성화 배포 시 수정
                 .authorizeHttpRequests(authorize -> // 인증, 인가 설정
                         authorize
-                                .antMatchers("/**").permitAll()
+                                .antMatchers("/**").permitAll() // 인증 전부 허용
                                 .antMatchers("/admin/**").hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                                .anyRequest().authenticated() // 나머지 요청은 인증되어야 함
                 )
                 .formLogin(login ->
                         login
@@ -59,23 +61,26 @@ public class WebSecurityConfig {
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
                                 .invalidateHttpSession(true)
-                ) //;
+                )
+
                 // 401, 403 Exception
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
-                // JWTSecurityConfig 적용
+
+                // 세션을 사용하지 않기 때문에 STATELESS로 설정
                 .and()
-                .apply(new JWTSecurityConfig(tokenProvider, userDetailService));
-             //   .and()
-               // .build();
-              /*  .addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), jwtManager), UsernamePasswordAuthenticationFilter.class)
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtManager))
-                .userDetailsService(userDetailService)*/;
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                // JWTFilter를 addFilterBefore로 JWTSecurityConfig에 등록
+                .and()
+                .apply(new JWTSecurityConfig(tokenProvider));
+
+                // h2 관련 코드 넣어야 하나?
 
         return http.build();
     }
-
 
     // 패스워드 인코더 빈 등록
     @Bean
@@ -83,8 +88,17 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    /*@Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return securityFilterChain(null).getAuthenticationManager();
-    }*/
+    // REST API 구현 시 발생하는 CORS 문제 차단
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
+
+        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+        urlBasedCorsConfigurationSource.registerCorsConfiguration("/api/**", corsConfiguration);
+        return urlBasedCorsConfigurationSource;
+    }
 }
