@@ -1,0 +1,14 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default-layout}">
+<section layout:fragment="content">
+    <!-- 회원가입 타이틀-->
+    <section th:replace="~{fragments/users/sign-up::title}"></section>
+    <!-- /section -->
+
+    <!-- 회원가입 form-->
+    <section th:replace="~{fragments/users/sign-up::form}"></section>
+    <!-- /section -->
+</section>
+</html>

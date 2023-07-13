@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head_config">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, inital-scale=1.0"/>
+
+        <!-- title -->
+        <title>아르떼리움</title>
+
+        <!-- common css-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/plugins.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/colors/purple.css}">
+        <link rel="preload" th:href="@{/css/fonts/space.css}" as="style" onload="this.rel='stylesheet'">
+
+        <!--common js-->
+        <script th:src="@{/js/plugins.js}" defer></script>
+        <script th:src="@{/js/theme.js}" defer></script>
+    </head>
+</html>
