@@ -1,7 +1,7 @@
 package kr.co.arterium.config;
 
 public enum FileLocation {
-    TEMP_IMAGE("classpath:/static/img/temp/"),    // 임시 이미지 파일의 위치
+    TEMP_IMAGE("/img/temp/"),    // 임시 이미지 파일의 위치
     BOARD_ATTACHMENT("board-attachments/");       // 게시판 첨부 파일의 위치
 
     private final String location;

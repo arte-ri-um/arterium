@@ -8,23 +8,19 @@ import kr.co.arterium.domain.exhibition.mapper.BookingSiteMapper;
 import kr.co.arterium.domain.exhibition.mapper.ExhibitionMapper;
 import kr.co.arterium.domain.exhibition.repository.BookingSiteRepository;
 import kr.co.arterium.domain.exhibition.repository.ExhibitionRepository;
-import kr.co.arterium.domain.exhibition.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class SettingRestController{
+public class SettingRestController{ // 포스트 생성시 기초 자료 등록
 
     private final ExhibitionRepository exhibitionRepository;
     private final BookingSiteRepository bookingSiteRepository;
-    private final FileService fileService;
 
     @GetMapping("/admin-page")
     public ModelAndView admin(ModelAndView modelAndView){   // 관리자 페이지 : 관리자가 전시장과 예매처를 관리한다 가정
@@ -66,12 +62,4 @@ public class SettingRestController{
         List<BookingSiteEntity> bookingSites = bookingSiteRepository.findAll();    // 전시회 리스트 가져오기
         return ResponseEntity.ok(bookingSites);  //전시장 값을 Entity값으로 반환
     }
-
-    @PostMapping("/upload-image")
-    @ResponseBody
-    public ResponseEntity uploadImage(@RequestBody MultipartFile file){ //비동기로 이미지 업로드 -> 파일아이디와 url을 반환함
-        Map<String, Object> responseData = fileService.saveTempImage(file);     //이미지 임시 저장 및 정보 처리
-        return ResponseEntity.ok(responseData);
-    }
-
 }

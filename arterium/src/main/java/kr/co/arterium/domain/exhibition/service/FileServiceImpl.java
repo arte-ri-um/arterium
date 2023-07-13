@@ -4,16 +4,12 @@ import kr.co.arterium.config.FileLocation;
 import kr.co.arterium.domain.exhibition.entity.ImageTempEntity;
 import kr.co.arterium.domain.exhibition.repository.ImageTempRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,27 +20,25 @@ import java.util.UUID;
 public class FileServiceImpl implements FileService {
 
     private final ImageTempRepository imageTempRepository;
-    private final ResourceLoader resourceLoader;
+
     @Override
-    public Map<String, Object> saveTempImage(MultipartFile file) {  //파일 저장 처리
+    public Map<String, Object> saveTempImage(MultipartFile image) {  //파일 저장 처리
+
+        // TODO 파일이 없으면 에러처리
+        
         //파일 정보
-        FileLocation fileLocation = FileLocation.TEMP_IMAGE;
-        String originalName = StringUtils.cleanPath(file.getOriginalFilename());
-        String fileExt = getFileExtension(originalName);
-        String saveName = generateSaveName(fileExt);
-        long fileSize = file.getSize();
-        LocalDateTime registerTime = LocalDateTime.now();
-        Path uploadPath =null;
-        Path filePath = null;
-        //파일 저장
+        String originalName = StringUtils.cleanPath(image.getOriginalFilename());   //파일 원래 이름(폴더를 생성해서 저장하지 않으므로 이름을 변경
+        String fileExt = getFileExtension(originalName);    //확장자
+        String saveName = generateSaveName(fileExt);        //저장이름
+        long fileSize = image.getSize();    // 사이즈저장
+        LocalDateTime registerTime = LocalDateTime.now();   //등록시간
+        String fileUrl=FileLocation.TEMP_IMAGE.getLocation()+saveName;
+        // TODO 확장자 검사 - 확장자명이 없는 경우 error, png와 jpg가 아닌 경우 error
+        File file = new File(saveName);
         try {
-            uploadPath = resourceLoader.getResource(fileLocation.getLocation()).getFile().toPath();
-            filePath = uploadPath.resolve(saveName);
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("클래스패스 리소스의 절대 파일 경로를 얻을 수 없습니다.", e);
+            image.transferTo(file);
         } catch (IOException e) {
-            throw new RuntimeException("파일 저장이 정상 처리되지 않았습니다.", e);
+            throw new RuntimeException(e);
         }
 
         // DB저장
@@ -60,7 +54,7 @@ public class FileServiceImpl implements FileService {
         // 파일 db id와 url 회신
         Map<String,Object> response = new HashMap<>();
         response.put("fileId", imageTempEntity.getId());
-        response.put("fileUrl", "/static/img/temp/" + saveName);
+        response.put("fileUrl", fileUrl);
 
         return response;
     }
@@ -76,9 +70,9 @@ public class FileServiceImpl implements FileService {
     }
 
     private static String generateSaveName(String extension) {  // 저장 이름 만들기
-        String randomUUID = UUID.randomUUID().toString();
-        LocalDateTime now = LocalDateTime.now();
+        String randomUUID = UUID.randomUUID().toString();   //랜덤명 저장
+        LocalDateTime now = LocalDateTime.now();            //현재시간
         String timestamp = now.toString().replace(":", "-");
-        return randomUUID + "_" + timestamp + "." + extension;
+        return randomUUID + "_" + timestamp + "." + extension;  // 새로 저장할 이름
     }
 }

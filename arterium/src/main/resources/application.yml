@@ -1,11 +1,11 @@
+fileLocation: # 파일 업로드 경로
+  image: C:/Users/JSH/Programming/arterium/arterium/src/main/resources/static/img/temp/
 spring:
   devtools:
     livereload:
       enabled: true
     restart:
       enabled: true
-  mvc:
-    static-path-pattern: /static/**
   thymeleaf:
     check-template-location: true
     prefix: classpath:/templates/
@@ -35,6 +35,11 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: none
-#  web:
-#    resources:
-#      static-locations:/static/
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 100MB
+      location: ${fileLocation.image}
