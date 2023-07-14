@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.Map;
 public class PostController {
     private final PostService postService;
 
-    @GetMapping("/post")
+    @GetMapping("/create-post")
     public ModelAndView postCreateView(ModelAndView modelAndView){    // 포스트 생성 뷰
         //전시장 정보 가져오기 TODO 장소별로 가져오기
         List<ExhibitionDTO> exhibitions = postService.findExhibitionsList();
@@ -32,7 +31,7 @@ public class PostController {
         modelAndView.addObject("bookingSites",bookingsites);
 
         //페이지 이름 셋팅
-        modelAndView.setViewName("exhibition/post");
+        modelAndView.setViewName("exhibition/createPostView");
         return modelAndView;
     }
 

@@ -56,7 +56,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    // TODO - post 랑 연결
 
     // == 생성 메서드 == /
     @Builder(builderMethodName = "createUser")
@@ -74,7 +73,7 @@ public class UserEntity implements UserDetails {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-
+    // TODO - post 랑 연결
     @Builder(builderMethodName = "UserBuilder")
     public UserEntity(Long id) {
         this.id = id;
