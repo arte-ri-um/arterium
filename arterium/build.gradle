@@ -25,6 +25,7 @@ dependencies {
     // spring
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     //db
@@ -36,8 +37,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // 시큐리티
-   implementation 'org.springframework.boot:spring-boot-starter-security'
-   testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
@@ -49,6 +50,14 @@ dependencies {
 
     // 뷰
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    implementation 'org.webjars:bootstrap:5.2.3'
+    implementation 'org.webjars:jquery:3.6.4'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+
+    //mapstruct - entity와 dto 변환
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 
 }
 

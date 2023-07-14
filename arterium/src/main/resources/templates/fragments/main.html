@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<!--main 전시회-->
+<section th:fragment="main_exhibition" class="wrapper bg-gradient-blend">
+    <div class="container pt-16 pt-md-18 pb-12 pb-md-18 pb-lg-20">
+        <div class="row">
+            <div class="col-lg-3 mx-auto">
+                <div class="img-mask">
+                    <a href="#"><img th:attr="src=@{/img/main/main_03.png},
+                    title=#{'이달의 추천 전시회'}, alt=#{'이달의 추천 전시회'}"/></a>
+                </div>
+            </div>
+            <!-- /column -->
+        </div>
+        <!-- /.row -->
+        <div class="row mt-10">
+            <div class="col-md-10 col-lg-9 col-xxl-8 mx-auto text-center">
+                <h2 class="fs-17 text-uppercase text-muted mb-3">Welcome Arterium ! </h2>
+                <h3 class="display-1 mb-5 px-xl-10">
+                    I'll recommend <em>cool</em> and <em>amazing</em> exhibition information for you.</h3>
+                <p class="lead fs-22">I’m very passionate about the work that I do, and if you are curious you can
+                    find
+                    my works on <a href="#" class="hover" style="color: var(--bs-dribbble);">Dribbble</a>, my
+                    portfolio
+                    on <a href="#" class="hover" style="color: var(--bs-behance);">Behance</a>, and my shots on <a
+                        href="#" class="hover" style="color: var(--bs-instagram);">Instagram</a>.</p>
+            </div>
+            <!-- /column -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+    <div class="overflow-hidden">
+        <div class="divider text-light mx-n2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 92.26">
+                <path fill="currentColor"
+                      d="M1206,21.2c-60-5-119-36.92-291-5C772,51.11,768,48.42,708,43.13c-60-5.68-108-29.92-168-30.22-60,.3-147,27.93-207,28.23-60-.3-122-25.94-182-36.91S30,5.93,0,16.2V92.26H1440v-87l-30,5.29C1348.94,22.29,1266,26.19,1206,21.2Z"/>
+            </svg>
+        </div>
+    </div>
+    <!-- /.overflow-hidden -->
+</section>
+
+<!--best 전시회-->
+<section th:fragment="best_exhibition" class="wrapper">
+    <div class="container pt-12 pt-md-0 pb-16 pb-md-18">
+        <div class="grid grid-view projects-masonry mt-md-n20 mt-lg-n22 mb-20">
+            <div class="row g-8 g-lg-10 isotope">
+                <div class="project item col-md-6 col-xl-4 workshop">
+                    <div class="card shadow-lg">
+                        <figure class="card-img-top itooltip itooltip-aqua" title='<h5 class="mb-0">Click to see the project</h5>'><a href="./single-project3.html"> <img th:src="@{https://picsum.photos/350/350}" alt="샘플이미지" /></a></figure>
+                        <div class="card-body p-7">
+                            <div class="post-header">
+                                <div class="post-category text-line mb-2 text-aqua">Workshop</div>
+                                <h3 class="mb-0">Ipsum Mollis Vulputate</h3>
+                            </div>
+                            <!-- /.post-header -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.project -->
+                <div class="project item col-md-6 col-xl-4 product">
+                    <div class="card shadow-lg">
+                        <figure class="card-img-top itooltip itooltip-purple"
+                                title='<h5 class="mb-0">Click to see the project</h5>'
+                        >
+                            <a href="./single-project2.html">
+                                <img th:src="@{https://picsum.photos/350/350}" alt="샘플이미지" /></a>
+                        </figure>
+                        <div class="card-body p-7">
+                            <div class="post-header">
+                                <div class="post-category text-line mb-2 text-purple">Product</div>
+                                <h3 class="mb-0">Inceptos Euismod Egestas</h3>
+                            </div>
+                            <!-- /.post-header -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.project -->
+                <div class="project item col-md-6 col-xl-4 product">
+                    <div class="card shadow-lg">
+                        <figure class="card-img-top itooltip itooltip-yellow"
+                                title='<h5 class="mb-0">Click to see the project</h5>'>
+                            <a href="./single-project.html"> <img th:src="@{https://picsum.photos/350/350}" alt="샘플이미지" /></a>
+                        </figure>
+                        <div class="card-body p-7">
+                            <div class="post-header">
+                                <div class="post-category text-line mb-2 text-yellow">Coffee</div>
+                                <h3 class="mb-0">Cras Fermentum Sem</h3>
+                            </div>
+                            <!-- /.post-header -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.project -->
+                <div class="project item col-md-6 col-xl-4 workshop">
+                    <div class="card shadow-lg">
+                        <figure class="card-img-top itooltip itooltip-red" title='<h5 class="mb-0">Click to see the project</h5>'><a href="./single-project2.html"> <img th:src="@{https://picsum.photos/350/350}" alt="샘플이미지" /></a></figure>
+                        <div class="card-body p-7">
+                            <div class="post-header">
+                                <div class="post-category text-line mb-2 text-red">Stationary</div>
+                                <h3 class="mb-0">Mollis Ipsum Mattis</h3>
+                            </div>
+                            <!-- /.post-header -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.project -->
+                <div class="project item col-md-6 col-xl-4 still-life">
+                    <div class="card shadow-lg">
+                        <figure class="card-img-top itooltip itooltip-orange" title='<h5 class="mb-0">Click to see the project</h5>'><a href="./single-project3.html"> <img th:src="@{https://picsum.photos/350/350}" alt="샘플이미지" /></a></figure>
+                        <div class="card-body p-7">
+                            <div class="post-header">
+                                <div class="post-category text-line mb-2 text-orange">Branding</div>
+                                <h3 class="mb-0">Ipsum Ultricies Cursus</h3>
+                            </div>
+                            <!-- /.post-header -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.project -->
+                <div class="project item col-md-6 col-xl-4 product">
+                    <div class="card shadow-lg">
+                        <figure class="card-img-top itooltip itooltip-leaf" title='<h5 class="mb-0">Click to see the project</h5>'><a href="./single-project.html"> <img th:src="@{https://picsum.photos/350/350}" alt="샘플이미지" /></a></figure>
+                        <div class="card-body p-7">
+                            <div class="post-header">
+                                <div class="post-category text-line mb-2 text-leaf">Print</div>
+                                <h3 class="mb-0">Sollicitudin Ornare Porta</h3>
+                            </div>
+                            <!-- /.post-header -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.project -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.grid -->
+    </div>
+    <!-- /.container -->
+</section>
+
+<!--전시회 요청-->
+<section th:fragment="request_exhibition"class="wrapper bg-gradient-blend">
+    <div class="container pt-15 pt-md-17 pb-13 pb-md-15">
+        <div class="row gx-md-8 gx-xl-12 gy-10">
+            <div class="col-lg-6">
+                <img src="./assets/img/icons/solid/email-2.svg" class="svg-inject icon-svg icon-svg-sm solid-duo text-purple-aqua mb-3" alt="" />
+                <h2 class="display-3 mb-3 pe-xl-14 pe-xxl-16">If you like what you see, <em>let's work</em> together.</h2>
+                <p class="lead fs-lg pe-xxl-12 mb-0">Have any questions? Reach out to me from this contact form and I will get back to you shortly.</p>
+            </div>
+            <!-- /column -->
+            <div class="col-lg-6">
+                <form class="contact-form needs-validation" method="post" action="./assets/php/contact.php" novalidate>
+                    <div class="messages"></div>
+                    <div class="row gx-4">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-4">
+                                <input id="form_name" type="text" name="name" class="form-control border-0" placeholder="Jane" required="required" data-error="First Name is required.">
+                                <label for="form_name">Name *</label>
+                                <div class="valid-feedback"> Looks good! </div>
+                                <div class="invalid-feedback"> Please enter your name. </div>
+                            </div>
+                        </div>
+                        <!-- /column -->
+                        <div class="col-md-6">
+                            <div class="form-floating mb-4">
+                                <input id="form_email" type="email" name="email" class="form-control border-0" placeholder="jane.doe@example.com" required="required" data-error="Valid email is required.">
+                                <label for="form_email">Email *</label>
+                                <div class="valid-feedback"> Looks good! </div>
+                                <div class="invalid-feedback"> Please provide a valid email address. </div>
+                            </div>
+                        </div>
+                        <!-- /column -->
+                        <div class="col-12">
+                            <div class="form-floating mb-4">
+                                <textarea id="form_message" name="message" class="form-control border-0" placeholder="Your message" style="height: 150px" required></textarea>
+                                <label for="form_message">Message *</label>
+                                <div class="valid-feedback"> Looks good! </div>
+                                <div class="invalid-feedback"> Please enter your messsage. </div>
+                            </div>
+                        </div>
+                        <!-- /column -->
+                        <div class="col-12">
+                            <input type="submit" class="btn btn-primary rounded-pill btn-send mb-3" value="Send message">
+                        </div>
+                        <!-- /column -->
+                    </div>
+                    <!-- /.row -->
+                </form>
+                <!-- /form -->
+            </div>
+            <!-- /column -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+    <div class="overflow-hidden">
+        <div class="divider text-light mx-n2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 92.26">
+                <path fill="currentColor" d="M1206,21.2c-60-5-119-36.92-291-5C772,51.11,768,48.42,708,43.13c-60-5.68-108-29.92-168-30.22-60,.3-147,27.93-207,28.23-60-.3-122-25.94-182-36.91S30,5.93,0,16.2V92.26H1440v-87l-30,5.29C1348.94,22.29,1266,26.19,1206,21.2Z" />
+            </svg>
+        </div>
+    </div>
+    <!-- /.overflow-hidden -->
+</section>
+</html>

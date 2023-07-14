@@ -16,9 +16,15 @@ spring:
   datasource:
     hikari:
       jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
+    # url: jdbc:h2:~/testDB;MODE=MYSQL  #local test DB 저장
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
+  h2: # 테스트를 위해 테스트 DB 사용
+    console:
+      enabled: true
+      path: /h2-console
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -28,14 +34,14 @@ spring:
         show_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-        ddl-auto: none
+      ddl-auto: none
 
   # 로깅 설정...
   logging:
     level:
       me.arterium: DEBUG
 
-    # SignatureAlgorithm.HS512 알고리즘을 사용
+          # SignatureAlgorithm.HS512 알고리즘을 사용
 jwt:
   header: Authorization
   secret: ArTeriumSecRetkEyArteriUmsecREtkeY #base64 인코딩
