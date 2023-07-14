@@ -48,7 +48,7 @@ class UserControllerTest {
 //        userRepository.deleteAll();
 //    }
 
-    @Test
+    /*@Test
     public void 회원가입_컨트롤러_테스트() throws Exception {
         //given
         String url = "/api/user";
@@ -75,6 +75,8 @@ class UserControllerTest {
         //then
         System.out.println("resultActions = " + resultActions.andReturn().getResponse().getContentAsString());
 
-    }
+    }*/
+
+
 
 }

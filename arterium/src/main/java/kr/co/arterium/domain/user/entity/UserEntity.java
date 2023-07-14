@@ -62,8 +62,8 @@ public class UserEntity implements UserDetails {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_authority",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_name")
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_name", referencedColumnName = "authority_name")
     )
     private Set<AuthorityEntity> authorities;
 

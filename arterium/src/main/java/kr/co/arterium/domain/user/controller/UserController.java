@@ -3,6 +3,8 @@ package kr.co.arterium.domain.user.controller;
 import kr.co.arterium.common.jwt.TokenProvider;
 import kr.co.arterium.common.response.ApiResponse;
 import kr.co.arterium.domain.user.dto.AddUserRequestDTO;
+import kr.co.arterium.domain.user.dto.LoginDTO;
+import kr.co.arterium.domain.user.dto.TokenDTO;
 import kr.co.arterium.domain.user.dto.UserDTO;
 import kr.co.arterium.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +25,24 @@ import java.util.Collections;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
-    private final TokenProvider tokenProvider; // 토큰 검증
+   // private final TokenProvider tokenProvider; // 토큰 검증
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     // TODO : 예외처리 해야한다.
 
     // 다시 만들기
-    @PostMapping
+    @PostMapping("/signup")
+    public ResponseEntity<Long> signUp(@RequestBody AddUserRequestDTO requestDTO) {
+        Long userId = userService.signUp(requestDTO);
+        return ResponseEntity.ok(userId);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO loginDTO) {
+        TokenDTO tokenDTO = userService.authenticate(loginDTO);
+        return ResponseEntity.ok(tokenDTO);
+
+   /* @PostMapping
     public ResponseEntity<?> registerUser(@RequestBody AddUserRequestDTO userRequestDTO){
         Long signedUserId = userService.signUp(userRequestDTO);
 
@@ -44,6 +57,6 @@ public class UserController {
                 Collections.singletonMap("id", signedUserId),
                 token
         );
-        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);*/
     }
 }

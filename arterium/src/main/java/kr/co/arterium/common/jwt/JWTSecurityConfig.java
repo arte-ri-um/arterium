@@ -40,19 +40,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
                 .and()
                 .apply(new JWTConfigurer(tokenProvider)); // JWTConfigurer를 적용하여 JWT 필터를 등록
     }*/
-// 이거 아예 없어도 될듯...? filter를 securityconfig에서 받자
-
 @Configuration
 @RequiredArgsConstructor
 public class JWTSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private final TokenProvider tokenProvider;
-   // private final UserDetailService userDetailsService;
+    // private final UserDetailService userDetailsService;
 
-        @Override
-        public void configure(HttpSecurity http) /*throws Exception*/ {
-            JWTFilter jwtFilter = new JWTFilter(tokenProvider); // JWTFilter 객체를 생성하여 TokenProvider를 주입
-            http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        }
+    @Override
+    public void configure(HttpSecurity http) /*throws Exception*/ {
+        JWTFilter jwtFilter = new JWTFilter(tokenProvider); // JWTFilter 객체를 생성하여 TokenProvider를 주입
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
+}
 //}

@@ -4,13 +4,11 @@ import kr.co.arterium.domain.user.dto.UserDTO;
 import kr.co.arterium.domain.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-// @EntityGraph 사용 유무 결정
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
     // authorities를 함께 로딩하기 위해 attributePaths를 지정
@@ -31,3 +29,4 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
     @Override
     List<UserEntity> findAllById(Iterable<Long> longs);*/
 }
+

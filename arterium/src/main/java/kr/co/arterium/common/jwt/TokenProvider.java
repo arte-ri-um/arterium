@@ -1,11 +1,15 @@
 package kr.co.arterium.common.jwt;
 
-import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 import kr.co.arterium.domain.user.entity.UserEntity;
 import kr.co.arterium.domain.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -109,7 +113,7 @@ public class TokenProvider {
                         .collect(Collectors.toList());
 
         // 디비를 거치지 않고 토큰에서 값을 꺼내 바로 시큐리티 유저 객체를 만들어 Authentication을 만들어 반환하기에 유저네임, 권한 외 정보는 알 수 없다.
-     //   User principal = new User(claims.getSubject(), "", authorities);
+        //   User principal = new User(claims.getSubject(), "", authorities);
         UserDetails userDetails = new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
         return new UsernamePasswordAuthenticationToken(userDetails, token, authorities);
     }

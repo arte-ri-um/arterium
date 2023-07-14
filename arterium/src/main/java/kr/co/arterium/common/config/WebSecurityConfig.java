@@ -1,6 +1,9 @@
 package kr.co.arterium.common.config;
 
-import kr.co.arterium.common.jwt.*;
+import kr.co.arterium.common.jwt.JWTSecurityConfig;
+import kr.co.arterium.common.jwt.JwtAccessDeniedHandler;
+import kr.co.arterium.common.jwt.JwtAuthenticationEntryPoint;
+import kr.co.arterium.common.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -10,9 +13,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import kr.co.arterium.domain.user.service.UserDetailService;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -77,7 +80,7 @@ public class WebSecurityConfig {
                 .and()
                 .apply(new JWTSecurityConfig(tokenProvider));
 
-                // h2 관련 코드 넣어야 하나?
+        // h2 관련 코드 넣어야 하나?
 
         return http.build();
     }

@@ -31,13 +31,16 @@ spring:
       ddl-auto: create-drop # 테스트, 삭제 예정
       # ddl-auto: none
 
-  # SignatureAlgorithm.HS512 알고리즘을 사용
-  jwt:
-    header: Authorization
-    secret: ArTeriumSecRetkEyArteriUmsecREtkeY #base64 인코딩
-    token-validity-in-seconds: 86400
+  # 로깅 설정...
+  logging:
+    level:
+      me.arterium: DEBUG
 
-# 로깅 설정...
-logging:
-  level:
-    me.arterium : DEBUG
+    # SignatureAlgorithm.HS512 알고리즘을 사용
+jwt:
+  header: Authorization
+  secret: ArTeriumSecRetkEyArteriUmsecREtkeY #base64 인코딩
+  token-validity-in-seconds: 86400
+
+server:
+  port: 8080

@@ -11,27 +11,21 @@ import java.util.Optional;
 
 // DB에서 Authentication 사용해 email 호출
 public class SecurityUtil {
-    private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
 
-    private SecurityUtil() {
-    }
+    public static String getCurrentUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-    public Optional<String> getCurrentUsername() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null) {
-            logger.debug("Security Context에 인증 정보가 없습니다.");
-            return Optional.empty();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
         }
 
-        String username = null;
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-            username = springSecurityUser.getUsername();
-        } else if (authentication.getPrincipal() instanceof String) {
-            username = (String) authentication.getPrincipal();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            return ((UserDetails) principal).getUsername();
+        } else if (principal instanceof String) {
+            return (String) principal;
         }
 
-        return Optional.ofNullable(username);
+        return null;
     }
 }
