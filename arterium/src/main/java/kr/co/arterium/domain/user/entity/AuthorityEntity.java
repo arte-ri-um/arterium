@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "authority")
 @Getter
 @NoArgsConstructor
-public class AuthorityEntity {
+public class AuthorityEntity { // 권한, role 없애기??
 
     @Id
     @Column(name = "authority_name", length = 50)

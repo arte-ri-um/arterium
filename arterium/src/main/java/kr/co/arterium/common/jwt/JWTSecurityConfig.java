@@ -8,6 +8,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
+// JWTFilter를 addFilterBefore로 JWTSecurityConfig에 등록
 @Configuration
 @RequiredArgsConstructor
 public class JWTSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {

@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TokenDTO {
-    private String token;
+    private String token; // 유저에게 줄 토큰 DTO
 }
