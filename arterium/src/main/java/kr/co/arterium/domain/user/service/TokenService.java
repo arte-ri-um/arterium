@@ -2,8 +2,11 @@ package kr.co.arterium.domain.user.service;
 
 import kr.co.arterium.common.jwt.TokenProvider;
 import kr.co.arterium.domain.user.dto.TokenDTO;
+import kr.co.arterium.domain.user.entity.UserEntity;
 import kr.co.arterium.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
 package kr.co.arterium.domain.user.service;
 
 import kr.co.arterium.domain.user.dto.AddUserRequestDTO;
+import kr.co.arterium.domain.user.entity.UserEntity;
 import kr.co.arterium.domain.user.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -30,11 +33,11 @@ class UserServiceImplTest {
     void signUp() {
         // given
         AddUserRequestDTO requestDTO = AddUserRequestDTO.builder()
-            .email("subin@mail.com")
-            .password("1234")
-            .nickname("영롱한 고양이")
-            .phone("01012345678")
-            .build();
+                .email("subin@mail.com")
+                .password("1234")
+                .nickname("영롱한 고양이")
+                .phone("01012345678")
+                .build();
 
         // when
         Long createdId = userService.signUp(requestDTO);

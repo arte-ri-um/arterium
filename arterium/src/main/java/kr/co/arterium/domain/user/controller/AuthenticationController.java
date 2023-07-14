@@ -3,6 +3,7 @@ package kr.co.arterium.domain.user.controller;
 import kr.co.arterium.common.response.ApiResponse;
 import kr.co.arterium.domain.user.dto.LoginDTO;
 import kr.co.arterium.domain.user.dto.TokenDTO;
+import kr.co.arterium.domain.user.entity.UserEntity;
 import kr.co.arterium.domain.user.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -28,7 +28,11 @@ CREATE TABLE users (
     PRIMARY KEY (id)
 ) COMMENT '사용자';
 
-
+-- 권한 테이블
+CREATE TABLE authority (
+                           authority_name VARCHAR(50) NOT NULL,
+                           PRIMARY KEY (authority_name)
+) COMMENT '권한';
 
 
 CREATE TABLE oauth_user (

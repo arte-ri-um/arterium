@@ -50,7 +50,7 @@ public class TokenProvider {
     }
 
     // 토큰 생성 및 검증 시에는 디코딩한 비밀키 사용
-   @PostConstruct
+    @PostConstruct
     public void init() {
         // secret 값을 Base64로 디코딩하여 키 생성
         byte[] keyBytes = Base64.getDecoder().decode(secret);

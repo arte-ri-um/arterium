@@ -28,11 +28,18 @@ spring:
         show_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: none
+        ddl-auto: none
 
-  jwt:
-    header: Authorization
-    # secret은 알고리즘에 따라 길이 맞춤.
-    # SignatureAlgorithm.HS512 알고리즘을 사용할 예정이기 때문에 512자 이상의 값을 입력
-    secret: and0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdp
-    token-validity-in-seconds: 3600
+  # 로깅 설정...
+  logging:
+    level:
+      me.arterium: DEBUG
+
+    # SignatureAlgorithm.HS512 알고리즘을 사용
+jwt:
+  header: Authorization
+  secret: ArTeriumSecRetkEyArteriUmsecREtkeY #base64 인코딩
+  token-validity-in-seconds: 86400
+
+server:
+  port: 8080
