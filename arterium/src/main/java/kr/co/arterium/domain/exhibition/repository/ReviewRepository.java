@@ -2,7 +2,6 @@ package kr.co.arterium.domain.exhibition.repository;
 
 import kr.co.arterium.domain.exhibition.entity.ReviewEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

@@ -36,6 +36,15 @@ spring:
     hibernate:
       ddl-auto: none
 
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 100MB
+      location: ${fileLocation.image}
+
   # 로깅 설정...
   logging:
     level:
@@ -49,3 +58,4 @@ jwt:
 
 server:
   port: 8080
+

@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 @Data
 @Builder
-public class BookingSiteDTO {
-    private Long id;
-    private String name;
-    private String siteUrl;
-    private String iconUrl;
+public class BookingSiteDTO {   //예매사이트
+    private Long id;    // 예매사이트 id
+    private String name;    //예매 사이트 이름
+    private String siteUrl; //예매 사이트 url
+    private String iconUrl; //아이콘 이미지 저장 url
 }
 

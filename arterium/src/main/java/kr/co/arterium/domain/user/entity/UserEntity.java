@@ -87,6 +87,11 @@ public class UserEntity implements UserDetails {
         this.authorities = authorities;
     }
 
+    @Builder(builderMethodName = "UserBuilder")
+    public UserEntity(Long id) {
+        this.id = id;
+    }
+
     @PrePersist
     public void prePersist() {
         this.gender = (this.gender == null) ? "N" : this.gender;
