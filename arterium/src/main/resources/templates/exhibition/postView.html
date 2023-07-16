@@ -3,6 +3,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/post-layout}">
 <div layout:fragment="postContent">
+    <!-- 변수 처리용 -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var deltePostDTO = /*[[${postDTO}]]*/ null;
+        var modifyPostDTO = null;
+        /*]]>*/
+    </script>
+
     <section class="wrapper bg-soft-primary">
         <div class="container pt-10 pb-19 pt-md-14 pb-md-20 text-center">
             <div class="row">
@@ -96,6 +104,13 @@
                                     <a href="#"><i class="uil uil-youtube"></i></a>
                                 </nav>
                                 <!-- /.social -->
+                                <hr/>
+                                <div id="modify">
+                                    <!-- 글쓴이만 보이게 처리해야 함 -->
+                                    <a th:href="@{/artpost/post/{postId}/edit(postId=${postDTO.id})}" class="btn btn-outline-gradient gradient-6 rounded-pill"><span>수정</span></a>
+                                    <a href="#" class="btn btn-outline-gradient gradient-1 rounded-pill" id="deletePost"><span>삭제</span></a>
+
+                                </div>
                                 <hr />
                                 <div id="comments">
                                     여기는 코멘트 영역입니다.
