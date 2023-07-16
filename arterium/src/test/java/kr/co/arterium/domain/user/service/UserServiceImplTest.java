@@ -33,11 +33,11 @@ class UserServiceImplTest {
     void signUp() {
         // given
         AddUserRequestDTO requestDTO = AddUserRequestDTO.builder()
-            .email("subin@mail.com")
-            .password("1234")
-            .nickname("영롱한 고양이")
-            .phone("01012345678")
-            .build();
+                .email("subin@mail.com")
+                .password("1234")
+                .nickname("영롱한 고양이")
+                .phone("01012345678")
+                .build();
 
         // when
         Long createdId = userService.signUp(requestDTO);
