@@ -5,11 +5,14 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @ToString
@@ -56,10 +59,19 @@ public class UserEntity implements UserDetails {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_name", referencedColumnName = "authority_name")
+    )
+    private Set<AuthorityEntity> authorities;
+
+    // TODO - post 랑 연결
 
     // == 생성 메서드 == /
     @Builder(builderMethodName = "createUser")
-    public UserEntity(Long id, String password, String nickname, String email, String phone, LocalDateTime birthdate, String gender, String profileUrl, int userLevel, int roleId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public UserEntity(Long id, String password, String nickname, String email, String phone, LocalDateTime birthdate, String gender, String profileUrl, int userLevel, int roleId, LocalDateTime createdAt, LocalDateTime updatedAt, Set<AuthorityEntity> authorities) {
         this.id = id;
         this.password = password;
         this.nickname = nickname;
@@ -72,8 +84,9 @@ public class UserEntity implements UserDetails {
         this.roleId = roleId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.authorities = authorities;
     }
-    // TODO - post 랑 연결
+
     @Builder(builderMethodName = "UserBuilder")
     public UserEntity(Long id) {
         this.id = id;
@@ -95,7 +108,10 @@ public class UserEntity implements UserDetails {
     // == 스프링 시큐리티 ==/
     @Override // 권한 반한
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        // return null;
+        return authorities.stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
+                .collect(Collectors.toSet());
     }
 
     @Override // 사용자의 id 반환

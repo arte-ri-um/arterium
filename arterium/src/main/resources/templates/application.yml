@@ -16,15 +16,9 @@ spring:
   datasource:
     hikari:
       jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
-    # url: jdbc:h2:~/testDB;MODE=MYSQL  #local test DB 저장
     username: sa
     password:
     driver-class-name: org.h2.Driver
-
-  h2: # 테스트를 위해 테스트 DB 사용
-    console:
-      enabled: true
-      path: /h2-console
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -36,26 +30,9 @@ spring:
     hibernate:
       ddl-auto: none
 
-  web:
-    resources:
-      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
-  servlet:
-    multipart:
-      max-file-size: 200MB
-      max-request-size: 100MB
-      location: ${fileLocation.image}
-
-  # 로깅 설정...
-  logging:
-    level:
-      me.arterium: DEBUG
-
-          # SignatureAlgorithm.HS512 알고리즘을 사용
-jwt:
-  header: Authorization
-  secret: ArTeriumSecRetkEyArteriUmsecREtkeY #base64 인코딩
-  token-validity-in-seconds: 86400
-
-server:
-  port: 8080
-
+  jwt:
+    header: Authorization
+    # secret은 알고리즘에 따라 길이 맞춤.
+    # SignatureAlgorithm.HS512 알고리즘을 사용할 예정이기 때문에 512자 이상의 값을 입력
+    secret: and0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdp
+    token-validity-in-seconds: 3600
