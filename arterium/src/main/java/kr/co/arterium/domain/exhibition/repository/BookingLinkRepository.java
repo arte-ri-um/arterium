@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BookingLinkRepository extends JpaRepository<BookingLinkEntity, Long> {    // 예매사이트Link repository
     List<BookingLinkEntity> findAllByPostId(Long postId);
+    void deleteAllByPostId(Long postId);
 }

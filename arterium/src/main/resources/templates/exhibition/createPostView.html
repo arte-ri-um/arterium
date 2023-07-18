@@ -1,0 +1,222 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/post-layout}">
+<div layout:fragment="postContent">
+    <!-- 변수 처리용 -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var exhibitionDTO = null;
+        var bookingSites = /*[[${bookingSites}]]*/ [];
+        var modifyPostDTO = /*[[${postDTO}]]*/ null;
+        var exhibitionDTO = null;
+        if (postDTO) {
+            exhibitionDTO = postDTO.exhibitionDTO;
+        }
+
+        var bookingLinkContents = [];
+
+        /* Iterate through bookingLinks and extract the contents */
+        /* bookingLinks 변수를 반복하며 내용을 추출합니다 */
+        /* 예약 링크가 없는 경우 예외 처리를 해야 합니다 */
+        if (postDTO && postDTO.bookingLinks) {
+            postDTO.bookingLinks.forEach(function(bookingLink) {
+                bookingLinkContents.push(bookingLink.bookingLinkDTO);
+            });
+        }
+        /*]]>*/
+    </script>
+    <section class="wrapper bg-soft-primary">
+        <div class="container pt-10 pb-19 pt-md-14 pb-md-20 text-center">
+            <h1 class="display-1 mb-4">전시회 포스트 등록</h1>
+        </div>
+    </section>
+    <section class="wrapper bg-light">
+        <div class="container pb-14 pb-md-16">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="blog single mt-n17">
+                        <div class="card">
+                            <figure class="card-img-top"><img src="./assets/img/photos/b1.jpg" alt=""/></figure>
+                            <div class="card-body">
+                                <form id="postForm">
+                                    <div class="classic-view">
+                                        <article class="post">
+                                            <div class="post-content mb-5">
+                                                <!-- 제목 넣기 -->
+                                                <div class="form-floating mb-4">
+                                                    <h3>제목</h3>
+                                                    <input id="title" type="text" class="form-control">
+                                                </div>
+                                                <div class="row">
+                                                    <!-- 전시장 고르기 -->
+                                                    <div class="col-md-6">
+                                                        <h4>전시 기본정보</h4>
+                                                        <hr class="hr-input">
+                                                        <div class="form-select-wrapper mb-4">
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <label for="exhibition_id" class="form-label">전시장</label>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <select class="form-select" name="exhibition_id" id="exhibition_id">
+                                                                        <option th:each="exhibition : ${exhibitions}"
+                                                                                th:value="${exhibition.id}"
+                                                                                th:text="${exhibition.name}"></option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <label for="age_restriction">관람연령</label>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <input type="number" class="form-control" name="age_restriction" id="age_restriction">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <label for="price">정가</label>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    <input type="number" class="form-control" name="price" id="price">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <!-- 날짜 고르기 -->
+                                                        <h4>전시 일정</h4>
+                                                        <hr class="hr-input">
+                                                        <div class="form-select-wrapper mb-4">
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label for="start_date">시작일</label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <input type="date" class="form-control" name="start_date" id="start_date">
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <label for="end_date">종료일</label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <input type="date" class="form-control" name="end_date" id="end_date">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label for="start_time">시작시간</label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <input type="time" class="form-control" id="start_time">
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <label for="end_time">종료시간</label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <input type="time" class="form-control" id="end_time">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <!-- 예약 사이트 등록하기 -->
+                                                    <div class="col-md-6">
+                                                        <h4>전시 예매 정보</h4>
+                                                        <hr class="hr-input">
+                                                        <div class="form-select-wrapper mb-4">
+                                                            <label>예매 가능 여부 </label>
+                                                            <input type="radio" class="form-check-input" name="is_eligibility" id="is_eligibility_yes" value="1">
+                                                            <label for="is_eligibility_yes">예</label>
+                                                            <input type="radio" class="form-check-input" name="is_eligibility" id="is_eligibility_no" value="0">
+                                                            <label for="is_eligibility_no">아니오</label>
+                                                            <div id="eligibility_info" style="display: none;">
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <label for="eligibility_date">티켓 오픈일</label>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <input type="date" class="form-control" name="eligibility_date" id="eligibility_date">
+                                                                    </div>
+                                                                </div>
+                                                                <div id="reservation-sites-container">
+                                                                    <div class="row reservation-site-row">
+                                                                        <div class="col-md-4">
+                                                                            <select name="reservation_site" class="form-select reservation-site">
+                                                                                <option th:each="site : ${bookingSites}" th:value="${site.id}"
+                                                                                        th:text="${site.name}"></option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <input type="url" name="reservation_url" class="form-control reservation-url">
+                                                                        </div>
+                                                                        <div class="col-md-2">
+                                                                            <a href="#" class="btn btn-circle btn-outline-primary btn-sm add-button"><i class="uil uil-plus"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h4>전시 요약 정보</h4>
+                                                        <hr class="hr-input">
+                                                        <!-- URL -->
+                                                        <div class="form-select-wrapper mb-4">
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label for="orign_url">전시 URL:</label>
+                                                                </div>
+                                                                <div class="col-md-10">
+                                                                    <input type="url" class="form-control" name="orign_url" id="orign_url">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-2">
+                                                                    <label for="summary">요약</label>
+                                                                </div>
+                                                                <div class="col-md-10">
+                                                                    <textarea name="summary" class="form-control" placeholder="전시회의 요약정보를 적어주세요" id="summary" required></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- 요약 -->
+                                                    </div>
+                                                </div>
+                                                <div class="form-floating mb-4">
+                                                    <h4>전시 상세 정보</h4>
+                                                    <textarea placeholder="전시회의 상세정보를 적어주세요" name="description" id="editor"></textarea>
+                                                </div>
+                                            </div>
+                                            <!-- /.post-content -->
+                                            <hr>
+                                            <!-- 여기에 태그 넣는 걸 넣자 -->
+                                            <!-- /.post-footer -->
+                                        </article>
+                                        <!-- /.post -->
+                                    </div>
+                                    <!-- /.classic-view -->
+                                    <hr>
+                                    <div class="form-floating mb-4 text-center">
+                                        <button class="btn btn-outline-primary">취소</button> <!-- 취소 구현 필요 -->
+                                        <button type="submit" class="btn btn-blue">저장</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.blog -->
+                </div>
+                <!-- /column -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+    <!-- /section -->
+</div>
+
+</html>

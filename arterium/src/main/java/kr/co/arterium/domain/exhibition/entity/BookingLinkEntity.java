@@ -16,12 +16,17 @@ public class BookingLinkEntity {//예매 사이트 url 저장
     @Column(name = "id")
     private Long id; //예매사이트 url id
 
-    @Column(name = "post_id")
-    private Long postId; //포스트id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private PostEntity post;
 
     @Column(name = "site_id")
     private Long siteId; //예매사이트 id
 
     @Column(name = "booking_url")
     private String bookingUrl; //예매 링크
+
+    public void setPost(PostEntity post) {
+        this.post = post;
+    }
 }
