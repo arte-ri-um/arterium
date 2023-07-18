@@ -32,8 +32,7 @@ public class ReviewServiceImpl implements ReviewService{
     @Transactional
     public Long save(ReviewRequestDTO reviewDto) {
         ReviewEntity review = ReviewRequestMapper.MAPPER.toEntity(reviewDto);       // entity -> dto
-        PostDTO postDto = postService.findByPostId(reviewDto.getPostId());          // post dto 찾기
-        PostEntity postEntity = PostMapper.MAPPER.toEntity(postDto);                // post dto -> post entity
+        PostEntity postEntity = postService.findByPostId(reviewDto.getPostId()).get();  // post entity 찾기
         UserEntity userEntity = userService.findByUserId(reviewDto.getUserId()).get();  // user entity 찾기
         review.setPost(postEntity);
         review.setUser(userEntity);

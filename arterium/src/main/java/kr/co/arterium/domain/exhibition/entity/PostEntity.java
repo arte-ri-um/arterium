@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -68,9 +71,15 @@ public class PostEntity {//포스트 생성 정보 저장
     @Column(name = "post_url")
     private String postUrl; //예약 url
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookingLinkEntity> bookingLinks = new ArrayList<>();
+
     @PostPersist
-    private void generatePostUrl() { //포스트 생성 시 url 생성
+    private void generatePostUrl() {
+        //포스트 생성 시 url 생성
         this.postUrl = "/artPost/post/" + this.id;
+        // 예약 사이트 링크에 postId 설정
+        this.bookingLinks.forEach(bookingLink -> bookingLink.setPost(this));
     }
 
 }

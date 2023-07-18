@@ -18,5 +18,9 @@ public interface PostService {
 
     PostViewDTO findPostById(Long postId); //postId로 페이지 정보 가져오기
 
-    PostDTO findByPostId(Long id);
+    Optional<PostEntity> findByPostId(Long id); //포스트 정보 가져오기
+
+    void deleteById(Long postId);   // 포스트 삭제
+
+    void modifyById(PostDTO postDTO);   //포스트 수정
 }

@@ -1,5 +1,5 @@
 fileLocation: # 파일 업로드 경로
-  image: C:/Users/kkee2/Desktop/arterium/arterium/arterium/src/main/resources/static/img/temp/
+  image: 본인경로/arterium/src/main/resources/static/img/temp/
 
 spring:
   devtools:
@@ -18,11 +18,12 @@ spring:
 
   datasource:
     hikari:
-#      jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
-    url: jdbc:h2:~/testDB;MODE=MYSQL  #local test DB 저장
+      jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
+    # url: jdbc:h2:~/testDB;MODE=MYSQL  #local test DB 저장
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
   h2: # 테스트를 위해 테스트 DB 사용
     console:
       enabled: true
@@ -38,9 +39,6 @@ spring:
     hibernate:
       ddl-auto: none
 
-#  web:
-#    resources:
-#      static-locations:/static/
   web:
     resources:
       static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
@@ -49,3 +47,17 @@ spring:
       max-file-size: 200MB
       max-request-size: 100MB
       location: ${fileLocation.image}
+
+  # 로깅 설정...
+  logging:
+    level:
+      me.arterium: DEBUG
+
+          # SignatureAlgorithm.HS512 알고리즘을 사용
+jwt:
+  header: Authorization
+  secret: ArTeriumSecRetkEyArteriUmsecREtkeY #base64 인코딩
+  token-validity-in-seconds: 86400
+
+server:
+  port: 8080

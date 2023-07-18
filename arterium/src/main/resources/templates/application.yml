@@ -1,0 +1,38 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html   # 파일 확장자
+    # TODO : 배포시 true 처리
+    cache: false # default true 개발 시에는 false 로 두는게 좋다.
+    enabled: true
+
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:tcp://localhost/~/arterium;MODE=MYSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+
+  jwt:
+    header: Authorization
+    # secret은 알고리즘에 따라 길이 맞춤.
+    # SignatureAlgorithm.HS512 알고리즘을 사용할 예정이기 때문에 512자 이상의 값을 입력
+    secret: and0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdpLWp3dC10ZXN0LWFsamphYmFlZ2ktand0LXRlc3QtYWxqamFiYWVnaS1qd3QtdGVzdC1hbGpqYWJhZWdp
+    token-validity-in-seconds: 3600
