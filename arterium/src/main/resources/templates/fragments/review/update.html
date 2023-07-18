@@ -1,0 +1,35 @@
+<section th:fragment="updateReview" class="wrapper bg-light">
+    <div class="container pb-14 pb-md-16">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="blog single mt-sm-15">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="classic-view">
+                                <article class="post">
+                                    <form method="post">
+                                        <div class="form-group">
+                                            <label class="form-label" for="rating">별점</label>
+                                            <input type="number" name="rating" class="form-control" id="rating"
+                                                   step="1" min="1"
+                                                   max="5"
+                                                   th:value="${review.rating}">
+                                            <br>
+                                            <label class="form-label" for="content">내용</label>
+                                            <textarea id="content" name="content" class="form-control"
+                                                      th:utext="${review.content}"
+                                                      style="height: 150px" required></textarea>
+                                        </div>
+                                        <br>
+                                        <button class="btn btn-primary rounded-pill btn-sm end-0" type="submit">등록
+                                        </button>
+                                    </form>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

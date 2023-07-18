@@ -2,7 +2,6 @@ package kr.co.arterium.domain.user.controller;
 
 import kr.co.arterium.common.response.ApiResponse;
 import kr.co.arterium.domain.user.dto.AddUserRequestDTO;
-import kr.co.arterium.domain.user.dto.UserDTO;
 import kr.co.arterium.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

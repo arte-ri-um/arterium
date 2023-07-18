@@ -1,0 +1,70 @@
+<div th:fragment="createReview" class="wrapper bg-light">
+    <div class="card card-border-start border-soft-blue mb-4">
+        <div class="card-body p-5">
+            <form th:action="@{{postId}/review/create(postId=${postId})}" method="post">
+                <div class="comment-header d-md-flex align-items-center">
+                    <input type="hidden" id="postId" name="postId" th:value="${postId}">
+                    <figure class="user-avatar">
+                        <img class="rounded-circle" alt=""
+                             th:if="${user.profileUrl != null}"
+                             th:src="@{${user.profileUrl}}">
+
+                        <img class="rounded-circle" alt=""
+                             th:if="${user.profileUrl == null}"
+                             th:src="@{/img/users/default.png}">
+                    </figure>
+                    <div>
+                        <h6 class="comment-author"><a
+                                th:text="${user.nickname}"
+                                class="link-dark"></a></h6>
+                        <input id="userId" name="userId" th:value="${user.id}" hidden>
+                        <!-- /.post-meta -->
+                    </div>
+                    <!-- /div -->
+                </div>
+                <!-- /.comment-header -->
+
+                <div class="form-group">
+                    <label for="rating">별점</label>
+                    <input type="number" id="rating" name="rating" class="form-control" step="1" min="1" max="5" placeholder="1점부터 5점까지 줄 수 있어요!">
+                    <div id="rating-star-box" class="d-flex flex-row align-items-center mt-5 mb-2">
+                        <span id="rating-star" class="ratings five"></span>
+                    </div>
+                    <br>
+                    <label for="content">내용</label>
+                    <textarea id="content" name="content" class="form-control" placeholder="리뷰를 남겨주세요!"
+                              style="height: 150px" required></textarea>
+                </div>
+                <br>
+                <button class="btn btn-primary rounded-pill btn-sm end-0" type="submit">등록</button>
+            </form>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        var ratingInput = document.getElementById('rating');
+        var ratingStar = document.getElementById('rating-star');
+
+        // rating input 값이 변경될 때 실행될 함수
+        ratingInput.addEventListener('change', function() {
+            var ratingValue = parseInt(ratingInput.value); // rating input 값 가져오기
+
+            // 기존에 추가된 클래스 모두 제거
+            ratingStar.classList.remove('one', 'two', 'three', 'four', 'five');
+
+            // 입력된 rating 값에 따라 클래스 추가
+            if (ratingValue === 1) {
+                ratingStar.classList.add('one');
+            } else if (ratingValue === 2) {
+                ratingStar.classList.add('two');
+            } else if (ratingValue === 3) {
+                ratingStar.classList.add('three');
+            } else if (ratingValue === 4) {
+                ratingStar.classList.add('four');
+            } else if (ratingValue === 5) {
+                ratingStar.classList.add('five');
+            }
+        });
+
+
+    </script>
+</div>

@@ -78,7 +78,7 @@ CREATE TABLE post (
                       origin_url VARCHAR(500) COMMENT '전시 소개가 자세히 적힌 URL',
                       is_eligibility INT COMMENT '예매 가능 여부',
                       eligibility_date DATETIME COMMENT '티켓 오픈일, 예매 시작일',
-                      reg_date DATETIME COMMENT '포스트 등록일',
+                      reg_date DEFAULT CURRENT_TIMESTAMP COMMENT '포스트 등록일',
                       post_url VARCHAR(500) COMMENT '포스트 URL',
 
                       foreign key (exhibition_id) references exhibition(id),

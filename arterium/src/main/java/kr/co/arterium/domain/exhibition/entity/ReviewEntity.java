@@ -18,29 +18,29 @@ public class ReviewEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;                    // 리뷰 아이디
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private PostEntity post;
+    private PostEntity post;            // 리뷰 대상 포스트 엔티티
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity user;            // 리뷰 작성 유저 엔티티
 
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String content;             // 리뷰 내용
 
     @Column(name="created_at", updatable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt;        // 리뷰 작성일시
 
     @Column(name="updated_at")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;        // 리뷰 수정일시
 
     @Column
-    private int rating;
+    private int rating;     // 별점
 
     @PrePersist
     public void prePersist() {
@@ -58,9 +58,4 @@ public class ReviewEntity {
 //        user.getReviews().add(this);
 //    }
 
-    @Builder
-    public ReviewEntity(String content, int rating) {
-        this.content = content;
-        this.rating = rating;
-    }
 }

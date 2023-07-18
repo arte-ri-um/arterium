@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="postHead">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, inital-scale=1.0" />
+    <title th:text="${headTitle}"></title>
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/plugins.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="preload" th:href="@{/css/fonts/space.css}" as="style" onload="this.rel='stylesheet'">
+
+    <!-- js -->
+<!--    <script th:src="@{/static/js/register.js}"></script>-->
+<!--    <script th:src="@{/static/js/post.js}"></script>-->
+<!--    <script th:src="@{/static/js/comment.js}"></script>-->
+<!--    <script th:src="@{/static/js/userInfo.js}"></script>-->
+    <script th:src="@{/js/plugins.js}" defer></script>
+    <script th:src="@{/js/theme.js}" defer></script>
+</head>
+</html>

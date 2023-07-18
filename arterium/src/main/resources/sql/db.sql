@@ -78,6 +78,7 @@ DROP TABLE IF EXISTS post;
 
 CREATE TABLE post (
     id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '포스트 아이디',
+    title varchar(500) COMMENT '제목',
     user_id BIGINT comment '작성자',
     exhibition_id BIGINT COMMENT '전시장 (exhibition id 외래키)',
     start_date DATETIME COMMENT '시작일',
@@ -90,9 +91,8 @@ CREATE TABLE post (
     origin_url VARCHAR(500) COMMENT '전시 소개가 자세히 적힌 URL',
     is_eligibility INT COMMENT '예매 가능 여부',
     eligibility_date DATETIME COMMENT '티켓 오픈일, 예매 시작일',
-    reg_date DATETIME COMMENT DEFAULT CURRENT_TIMESTAMP '포스트 등록일',
+    reg_date DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '포스트 등록일',
     post_url VARCHAR(500) COMMENT '포스트 URL',
-
     foreign key (exhibition_id) references exhibition(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) COMMENT '전시회 게시물';
@@ -112,6 +112,7 @@ CREATE TABLE review (
 ) COMMENT '전시회 리뷰 테이블';
 
 CREATE TABLE booking_links (
+    id bigint Auto_increment primary key comment '예매 링크 id',
     post_id BIGINT COMMENT '포스트 id',
     site_id BIGINT COMMENT '예매 사이트 id',
     booking_url VARCHAR(500) COMMENT '예매 링크',

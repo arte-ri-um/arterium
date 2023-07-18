@@ -1,16 +1,15 @@
 package kr.co.arterium.domain.exhibition.service;
 
-import kr.co.arterium.domain.exhibition.dto.ReviewDTO;
-import kr.co.arterium.domain.exhibition.entity.ReviewEntity;
+import kr.co.arterium.domain.exhibition.dto.ReviewRequestDTO;
+import kr.co.arterium.domain.exhibition.dto.ReviewResponseDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ReviewService {
-
-    Long create(ReviewDTO reviewDto, Long userId, Long postId);
-    Optional<ReviewEntity> findOneById(Long id);
-//    Optional<ReviewEntity> findOneByPostId(Long postId);
-    List<ReviewEntity> findReviews();
-    List<ReviewEntity> findReviewsByPostId(Long postId);
+    Long save(ReviewRequestDTO reviewDto);      // 리뷰 저장
+    ReviewResponseDTO findOneById(Long id);     // 단일 리뷰 찾기
+    List<ReviewResponseDTO> findReviews();      // 전체 리뷰 찾기
+    List<ReviewResponseDTO> findReviewsByPostId(Long postId);   // 특정 post에 대한 전체 리뷰 찾기
+    void update(ReviewRequestDTO reviewDto, Long id);       // 리뷰 수정
+    void delete(Long id);       // 리뷰 삭제
 }
